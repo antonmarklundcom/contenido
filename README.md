@@ -36,7 +36,7 @@ editar una línea.
 que el sitio se vea terminado mientras generás. Ninguno es contenido paraguayo
 ni definitivo.
 
-Los 13 prompts para generarlos están en **`HIGGSFIELD-PROMPTS.md`**, con el
+Los 14 prompts para generarlos están en **`HIGGSFIELD-PROMPTS.md`**, con el
 manifiesto de nombres de archivo y los comandos de compresión.
 
 Flujo: generar → comprimir con ffmpeg → guardar en `public/media/` con el nombre
@@ -170,8 +170,8 @@ falten los datos.
       aparece solo cuando haya permiso por escrito
 - [ ] **Reseñas** — no hay sección de testimonios. No se inventa una; cuando
       haya reseñas reales de Google, se agregan con nombre y barrio
-- [ ] Generar los 13 medios (`HIGGSFIELD-PROMPTS.md`)
-- [ ] Imagen OG real (1200×630) — `index.html` apunta a `/og-contenido.jpg`
+- [ ] Generar los 14 medios (`HIGGSFIELD-PROMPTS.md`)
+- [ ] Imagen OG (prompt OG en HIGGSFIELD-PROMPTS.md) → `public/og-contenido.jpg`
 - [ ] Variables `VENDERCRM_*` en Hostinger
 - [ ] Verificación de Search Console por **registro TXT de DNS** (sobrevive redeploys)
 - [ ] Perfil de Negocio de Google + WhatsApp Business con catálogo y horarios

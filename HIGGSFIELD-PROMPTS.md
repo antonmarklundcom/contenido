@@ -6,7 +6,7 @@ solo se resuelve cuando la generación sale por MCP, y pegada a mano termina
 escrita dentro de la imagen.
 
 Por eso cada prompt repite paleta, luz, lente y ambiente: la consistencia entre
-las 13 piezas vive en las palabras, no en un elemento de referencia compartido.
+las 14 piezas vive en las palabras, no en un elemento de referencia compartido.
 
 **Regla que no se rompe:** estas piezas son ilustrativas, tipo stock. Nunca se
 etiquetan como el trabajo de un cliente concreto, nunca llevan el nombre de una
@@ -38,9 +38,14 @@ slot `web` queda sin equivalente.
 |---|---|
 | Modelo video | **Seedance 1.0 Pro** (movimiento estable, buen costo). Kling 2.5 si querés más detalle en el orbital del auto. |
 | Modelo imagen (BG) | **Nano Banana Pro** o **Seedream v5 Pro**, 1920px |
-| Duración clips | 5–8 s |
+| Duración clips | Hero 6–8 s · Servicios 6–8 s · Trabajos 6–10 s |
 | Audio | **Sin audio.** Los `<video>` van `muted`; el audio es peso muerto. |
-| Aspecto | 16:9 hero y trabajos · 4:3 servicios · 21:9 fondo |
+| Aspecto | 16:9 hero y trabajos · **1:1 servicios** · 21:9 fondo · 1.91:1 OG |
+
+**Sobre el 1:1 de Servicios:** el panel del slider es 4:3 con `object-cover`.
+Desde 1:1 recorta ~11% arriba y abajo; desde 16:9 recortaría los costados y se
+pierde el encuadre. Generá 1:1 y **mantené la acción centrada**. Si tu modelo no
+ofrece 1:1, usá 4:3 directo.
 
 **Consejo de consistencia:** generá primero el **frame inicial** como imagen
 (mismo prompt, sin la línea de cámara) y recién después usá image-to-video. Da
@@ -102,6 +107,23 @@ Wide cinematic aerial view of Asunción, Paraguay at dusk, low warm city lights 
 --no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, oversaturated colors, teal and orange grading, blue color cast, HDR halos, neon, fisheye distortion, cluttered frame, harsh direct flash
 ```
 
+### OG · `og-contenido.jpg` — imagen 1.91:1, 1200×630
+
+La miniatura que sale cuando alguien comparte el link por WhatsApp — que en
+Paraguay es **el** canal donde se comparte. Es la única pieza donde el encuadre
+tiene que funcionar a 300px de ancho en un chat.
+
+**Sin texto en la imagen.** El título y la descripción los pone WhatsApp desde
+las meta tags; texto quemado dentro se duplica y se ve amateur.
+
+```
+Cinematic still of a professional video camera on a tripod, seen from behind and slightly to the side, framing a bright modern living room out of focus beyond it. Interior of a contemporary house in Asunción, Paraguay, warm late afternoon light through large windows. Warm documentary cinematography, natural available light, muted palette of cream, deep warm brown and soft ochre, 35mm lens, shallow depth of field with the camera body sharp and the room softly blurred, gentle 35mm film grain, calm and premium, no people. Composition weighted to the left third, generous clean negative space on the right.
+--no text, watermark, logo, brand names, signage, subtitles, captions, letters, numbers, UI overlays, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, harsh direct flash
+```
+
+Guardar como `public/og-contenido.jpg`, calidad 82, objetivo ≤200 KB.
+`index.html` ya apunta a `https://contenido.com.py/og-contenido.jpg`.
+
 ---
 
 # TANDA 2 — TRABAJOS (16:9)
@@ -140,7 +162,7 @@ Slow overhead descent onto a beautifully plated dish being set down on a rustic 
 
 ---
 
-# TANDA 3 — SERVICIOS (4:3)
+# TANDA 3 — SERVICIOS (1:1)
 
 Van en el panel del slider, más grandes que las tarjetas. Acá **sí conviene que
 haya personas trabajando** — ilustra el servicio y convierte mejor. Caras
@@ -189,14 +211,15 @@ nada a mano.
 | H3 | `reel-03-clinica.mp4` | hero-bleed | 16:9 | — |
 | H4 | `reel-04-local.mp4` | hero-bleed | 16:9 | — |
 | BG | `fondo-trabajos-asuncion.webp` | section-break | 21:9 | Vista de Asunción al atardecer |
+| OG | `og-contenido.jpg` | og:image | 1.91:1 | — (miniatura al compartir) |
 | T1 | `trabajo-recorrido-propiedad.mp4` | card-motif | 16:9 | Recorrido de propiedad — Inmobiliaria |
 | T2 | `trabajo-ficha-vehiculo.mp4` | card-motif | 16:9 | Ficha de vehículo en video — Concesionaria |
 | T3 | `trabajo-presentacion-clinica.mp4` | card-motif | 16:9 | Presentación de clínica — Salud |
 | T4 | `trabajo-local-producto.mp4` | card-motif | 16:9 | Reel de local y producto — Comercio |
-| S1 | `servicio-video-redes.mp4` | card-motif | 4:3 | Grabación de un reel vertical en un local de Asunción |
-| S2 | `servicio-recorrido-propiedad.mp4` | card-motif | 4:3 | Recorrido filmado de una propiedad en Asunción |
-| S3 | `servicio-clinica.mp4` | card-motif | 4:3 | Sala de espera de una clínica en Asunción |
-| S4 | `servicio-sitio-web.mp4` | card-motif | 4:3 | Sitio web de un negocio paraguayo en un celular |
+| S1 | `servicio-video-redes.mp4` | card-motif | 1:1 | Grabación de un reel vertical en un local de Asunción |
+| S2 | `servicio-recorrido-propiedad.mp4` | card-motif | 1:1 | Recorrido filmado de una propiedad en Asunción |
+| S3 | `servicio-clinica.mp4` | card-motif | 1:1 | Sala de espera de una clínica en Asunción |
+| S4 | `servicio-sitio-web.mp4` | card-motif | 1:1 | Sitio web de un negocio paraguayo en un celular |
 
 ## Antes de subirlos: comprimir
 
