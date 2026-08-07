@@ -24,13 +24,42 @@ export const USING_PLACEHOLDERS = true;
 
 /* ---------------------------------------------------------------------------
  * SECCIÓN 1 — HERO. Showreel: 4 clips que se encadenan con fundido.
- * Slot: hero-bleed · 16:9 · sin audio · 5–8s cada uno
+ * Slot: hero-bleed · 16:9 · sin audio · 6–8s cada uno
+ *
+ * `poster` es el MISMO frame inicial que usaste como referencia en Seedance,
+ * exportado a WebP. No es trabajo extra: ya lo generaste.
+ *
+ * Hace tres cosas:
+ *   1. El hero se ve al instante, antes de que baje un solo byte de video.
+ *      Sin poster, en datos móviles el hero es un rectángulo negro.
+ *   2. Es el fallback cuando el navegador bloquea el autoplay.
+ *   3. Es lo ÚNICO que se carga si el visitante tiene el ahorro de datos
+ *      activado — muy común en prepago paraguayo.
+ *
+ * El poster del primer clip es el activo más importante del sitio para el LCP.
+ * Que pese ≤80 KB.
  * ------------------------------------------------------------------------- */
-export const HERO_CLIPS: { src: string; file: string }[] = [
-  { src: `${CDN}/hf_20260711_090308_1dd0cea7-f9ba-4db4-8147-c7d746061c9e.mp4`, file: 'reel-01-inmobiliaria.mp4' },
-  { src: `${CDN}/hf_20260702_102608_5fa1187d-9ac6-44fb-82ab-54376200abc0.mp4`, file: 'reel-02-concesionaria.mp4' },
-  { src: `${CDN}/hf_20260625_174131_395bc785-bb21-4e65-abf6-27c56f0764b6.mp4`, file: 'reel-03-clinica.mp4' },
-  { src: `${CDN}/hf_20260525_052706_d2e390fd-1846-4fe7-a4d8-8d2f1c875358.mp4`, file: 'reel-04-local.mp4' },
+export const HERO_CLIPS: { src: string; poster: string; file: string }[] = [
+  {
+    src: `${CDN}/hf_20260711_090308_1dd0cea7-f9ba-4db4-8147-c7d746061c9e.mp4`,
+    poster: '',
+    file: 'reel-01-inmobiliaria.mp4',
+  },
+  {
+    src: `${CDN}/hf_20260702_102608_5fa1187d-9ac6-44fb-82ab-54376200abc0.mp4`,
+    poster: '',
+    file: 'reel-02-concesionaria.mp4',
+  },
+  {
+    src: `${CDN}/hf_20260625_174131_395bc785-bb21-4e65-abf6-27c56f0764b6.mp4`,
+    poster: '',
+    file: 'reel-03-clinica.mp4',
+  },
+  {
+    src: `${CDN}/hf_20260525_052706_d2e390fd-1846-4fe7-a4d8-8d2f1c875358.mp4`,
+    poster: '',
+    file: 'reel-04-local.mp4',
+  },
 ];
 
 /* ---------------------------------------------------------------------------
