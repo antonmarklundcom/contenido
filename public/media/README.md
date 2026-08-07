@@ -25,8 +25,18 @@ servicio-sitio-web.mp4
 fondo-trabajos-asuncion.webp
 ```
 
-Los `.webp` de los reels son los **frames iniciales** que usaste como
-referencia en Seedance, exportados. No hay que generarlos aparte.
+Los `.webp` de los reels se **extraen del MP4 ya comprimido**, no son la
+imagen de referencia que le diste a Seedance:
+
+```bash
+ffmpeg -i reel-01-inmobiliaria.mp4 -vframes 1 -q:v 2 f.png
+cwebp -q 80 f.png -o reel-01-inmobiliaria.webp
+rm f.png
+```
+
+El frame 1 que renderiza Seedance nunca es idéntico a la referencia, y esa
+diferencia se ve como un salto justo cuando arranca el video. Sacándolo del
+MP4 final, el paso del poster al video es invisible.
 
 `og-contenido.jpg` NO va acá — va en `public/` a secas, porque `index.html`
 apunta a la raíz del dominio.

@@ -26,8 +26,15 @@ export const USING_PLACEHOLDERS = true;
  * SECCIÓN 1 — HERO. Showreel: 4 clips que se encadenan con fundido.
  * Slot: hero-bleed · 16:9 · sin audio · 6–8s cada uno
  *
- * `poster` es el MISMO frame inicial que usaste como referencia en Seedance,
- * exportado a WebP. No es trabajo extra: ya lo generaste.
+ * `poster` se EXTRAE del MP4 ya comprimido, no es la imagen de referencia que
+ * le diste a Seedance:
+ *
+ *     ffmpeg -i reel-01-inmobiliaria.mp4 -vframes 1 -q:v 2 f.png
+ *     cwebp -q 80 f.png -o reel-01-inmobiliaria.webp
+ *
+ * El frame 1 que Seedance renderiza nunca es idéntico a la referencia, y esa
+ * diferencia se ve como un salto en el momento exacto en que arranca el video.
+ * Sacándolo del MP4 final, el corte del poster al video es invisible.
  *
  * Hace tres cosas:
  *   1. El hero se ve al instante, antes de que baje un solo byte de video.
