@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es-PY">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>Contenido.com.py — Video y contenido para negocios en Asunción</title>
+    <meta
+      name="description"
+      content="Producimos video, foto y contenido para inmobiliarias, concesionarias, clínicas y comercios de Asunción y el Gran Asunción. Presupuesto sin costo por WhatsApp."
+    />
+    <link rel="canonical" href="https://contenido.com.py/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_PY" />
+    <meta property="og:url" content="https://contenido.com.py/" />
+    <meta property="og:site_name" content="Contenido.com.py" />
+    <meta property="og:title" content="Contenido.com.py — Video y contenido para negocios en Asunción" />
+    <meta
+      property="og:description"
+      content="Video, foto y contenido para inmobiliarias, concesionarias, clínicas y comercios de Asunción y el Gran Asunción."
+    />
+    <!-- OG-IMAGE: reemplazar por el frame del reel una vez generado (1200x630). -->
+    <meta property="og:image" content="https://contenido.com.py/og-contenido.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Un solo par de fuentes. display=swap + subset latino. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600&display=swap"
+    />
+
+    <!-- ANALYTICS: pegar GTM o GA4 acá. Los eventos ya se disparan por el shim data-ev. -->
+    <!-- SEARCH-CONSOLE: <meta name="google-site-verification" content=""> -->
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Contenido.com.py",
+        "url": "https://contenido.com.py",
+        "description": "Producción de video, foto y contenido para negocios en Asunción y el Gran Asunción.",
+        "telephone": "+595995628862",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Asunción",
+          "addressRegion": "Central",
+          "addressCountry": "PY"
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Asunción" },
+          { "@type": "City", "name": "Luque" },
+          { "@type": "City", "name": "San Lorenzo" },
+          { "@type": "City", "name": "Fernando de la Mora" },
+          { "@type": "City", "name": "Lambaré" },
+          { "@type": "City", "name": "Capiatá" },
+          { "@type": "City", "name": "Mariano Roque Alonso" },
+          { "@type": "Country", "name": "Paraguay" }
+        ],
+        "knowsLanguage": ["es-PY", "gn"],
+        "serviceType": [
+          "Producción de video",
+          "Contenido para redes sociales",
+          "Fotografía comercial",
+          "Recorridos de propiedades"
+        ]
+      }
+    </script>
+
+    <script>
+      // Shim de eventos (~350 bytes, no carga nada). Cuando entre GTM/GA4/Plausible,
+      // todos los nombres de evento y ubicaciones ya coinciden.
+      (function () {
+        window.dataLayer = window.dataLayer || [];
+        document.addEventListener(
+          'click',
+          function (e) {
+            var t = e.target.closest('[data-ev]');
+            if (!t) return;
+            window.dataLayer.push({
+              event: t.dataset.ev,
+              ev_loc: t.dataset.evLoc || '',
+              page_path: location.pathname,
+              site: location.hostname,
+            });
+            if (window.plausible) window.plausible(t.dataset.ev, { props: { loc: t.dataset.evLoc || '' } });
+          },
+          true
+        );
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
