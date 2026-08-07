@@ -22,7 +22,7 @@ terminado desde hoy. Podés generar por tandas:
 
 | Tanda | Piezas | Qué desbloquea |
 |---|---|---|
-| **1 — mínima** | H1–H4 + BG | El hero deja de ser genérico. Es el 80% del impacto. |
+| **1 — mínima** | H1–H4 + BG + OG | El hero deja de ser genérico y el link se comparte bien. Es el 80% del impacto. |
 | **2** | T1–T4 | La sección Trabajos pasa a ser tuya. |
 | **3** | S1–S4 | El slider de Servicios queda propio. |
 
