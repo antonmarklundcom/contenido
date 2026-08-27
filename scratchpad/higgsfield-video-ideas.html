@@ -1,0 +1,417 @@
+<title>Clip Shortlist</title>
+<style>
+  :root {
+    --bg: #ede6d6;
+    --surface: #fbf8f1;
+    --ink: #2b241a;
+    --muted: #8a7f68;
+    --line: #d9cfb8;
+    --accent-estate: #a8562e;
+    --accent-estate-soft: #a8562e1a;
+    --accent-residency: #3e6e64;
+    --accent-residency-soft: #3e6e641a;
+    --focus: #2b241a;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1b1812;
+      --surface: #242017;
+      --ink: #ede6d6;
+      --muted: #a79a7e;
+      --line: #3a3327;
+      --accent-estate: #d97a4c;
+      --accent-estate-soft: #d97a4c26;
+      --accent-residency: #6fa89a;
+      --accent-residency-soft: #6fa89a26;
+      --focus: #ede6d6;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #1b1812;
+    --surface: #242017;
+    --ink: #ede6d6;
+    --muted: #a79a7e;
+    --line: #3a3327;
+    --accent-estate: #d97a4c;
+    --accent-estate-soft: #d97a4c26;
+    --accent-residency: #6fa89a;
+    --accent-residency-soft: #6fa89a26;
+    --focus: #ede6d6;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 3rem 1.5rem 5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  main {
+    width: 100%;
+    max-width: 760px;
+  }
+
+  h1, h2, h3 {
+    font-family: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .label {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  header.doc-head {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1.75rem;
+    margin-bottom: 2.25rem;
+  }
+
+  header.doc-head .label { margin-bottom: 0.6rem; }
+
+  h1 {
+    font-size: clamp(1.9rem, 4vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .doc-sub {
+    margin-top: 0.6rem;
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 60ch;
+  }
+
+  .cost-strip {
+    margin-top: 1.25rem;
+    display: flex;
+    gap: 1.75rem;
+    flex-wrap: wrap;
+  }
+
+  .cost-item {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cost-item .n {
+    font-size: 1.15rem;
+    color: var(--ink);
+    display: block;
+  }
+
+  .cost-item .lbl {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  section.cluster {
+    margin-bottom: 2.75rem;
+  }
+
+  .cluster-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+  }
+
+  .cluster[data-tone="estate"] .cluster-head h2 { color: var(--accent-estate); }
+  .cluster[data-tone="residency"] .cluster-head h2 { color: var(--accent-residency); }
+
+  .cluster-head h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  .domains {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .cluster-note {
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-style: italic;
+    margin: 0.35rem 0 1.1rem;
+  }
+
+  .clip-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .clip {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--tone, var(--muted));
+    border-radius: 6px;
+    padding: 0.95rem 1.1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 0.9rem;
+    align-items: start;
+  }
+
+  .cluster[data-tone="estate"] .clip { --tone: var(--accent-estate); }
+  .cluster[data-tone="residency"] .clip { --tone: var(--accent-residency); }
+
+  .clip input[type="checkbox"] {
+    grid-row: 1 / 3;
+    margin-top: 0.3rem;
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: var(--tone, var(--ink));
+  }
+
+  .clip input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .clip-title {
+    font-family: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .clip-num {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: var(--tone, var(--muted));
+  }
+
+  .clip-desc {
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .clip.done { opacity: 0.5; }
+  .clip.done .clip-title { text-decoration: line-through; text-decoration-color: var(--muted); }
+
+  .howto {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.25rem 1.4rem;
+    margin-top: 2.5rem;
+  }
+
+  .howto h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .howto p {
+    margin: 0.4rem 0;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+
+  .selection-line {
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px dashed var(--line);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.85rem;
+    color: var(--ink);
+  }
+
+  .selection-line .none { color: var(--muted); font-style: italic; font-family: "Source Serif 4", serif; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .clip { transition: opacity 0.15s ease; }
+  }
+</style>
+
+<main>
+  <header class="doc-head">
+    <div class="label">Content pipeline — pre-production</div>
+    <h1>Clip Shortlist</h1>
+    <p class="doc-sub">
+      Twelve scene concepts for the real-estate and residency site clusters.
+      Check the ones you want, then send back the checked list and I'll batch-generate.
+    </p>
+    <div class="cost-strip">
+      <div class="cost-item"><span class="n">32.5</span><span class="lbl">credits / clip</span></div>
+      <div class="cost-item"><span class="n">~180</span><span class="lbl">clips in budget</span></div>
+      <div class="cost-item"><span class="n">seedance_2_5</span><span class="lbl">model</span></div>
+    </div>
+  </header>
+
+  <section class="cluster" data-tone="estate">
+    <div class="cluster-head">
+      <h2>Real estate cluster</h2>
+      <span class="domains">inmobiliaria.com.py · realestateinparaguay.com · terreno.com.py</span>
+    </div>
+    <p class="cluster-note">Sites not fully built yet — footage runs on social first, drops into the site hero once ready. Shared across all three domains.</p>
+    <div class="clip-grid">
+      <label class="clip">
+        <input type="checkbox" data-id="1" data-cluster="estate">
+        <div>
+          <div class="clip-title"><span class="clip-num">01</span> Aerial skyline golden hour</div>
+          <p class="clip-desc">Drone-style sweep over Asunción skyline at golden hour, warm light, modern buildings in foreground, river in background.</p>
+        </div>
+      </label>
+      <label class="clip">
+        <input type="checkbox" data-id="2" data-cluster="estate">
+        <div>
+          <div class="clip-title"><span class="clip-num">02</span> Gated community flyover</div>
+          <p class="clip-desc">Slow aerial glide over a gated residential neighborhood — pool, palm trees, manicured lawns, quiet upscale feel.</p>
+        </div>
+      </label>
+      <label class="clip">
+        <input type="checkbox" data-id="3" data-cluster="estate">
+        <div>
+          <div class="clip-title"><span class="clip-num">03</span> Land / terreno reveal</div>
+          <p class="clip-desc">Wide open plot of land, camera pushes forward low to the ground, sun flare, grass moving in wind — "blank canvas, your future home" for terreno.com.py.</p>
+        </div>
+      </label>
+      <label class="clip">
+        <input type="checkbox" data-id="4" data-cluster="estate">
+        <div>
+          <div class="clip-title"><span class="clip-num">04</span> Modern house walkthrough (exterior)</div>
+          <p class="clip-desc">Slow dolly toward a modern Paraguayan house facade, gate opening, warm interior lights visible through windows at dusk.</p>
+        </div>
+      </label>
+      <label class="clip">
+        <input type="checkbox" data-id="5" data-cluster="estate">
+        <div>
+          <div class="clip-title"><span class="clip-num">05</span> Investor hands / paperwork macro</div>
+          <p class="clip-desc">Close-up of hands reviewing a property blueprint or tablet with a house render, out-of-focus Asunción skyline behind — investment framing.</p>
+        </div>
+      </label>
+      <label class="clip">
+        <input type="checkbox" data-id="6" data-cluster="estate">
+        <div>
+          <div class="clip-title"><span class="clip-num">06</span> Riverside luxury property</div>
+          <p class="clip-desc">Property or dock scene along the Río Paraguay, boats, sunset, aspirational lifestyle framing.</p>
+        </div>
+      </label>
+    </div>
+  </section>
+
+  <section class="cluster" data-tone="residency">
+    <div class="cluster-head">
+      <h2>Residency / investor cluster</h2>
+      <span class="domains">paraguayresidency.co.uk · paraguayresidencyguide.com · paraguayinvestorpass.com</span>
+    </div>
+    <p class="cluster-note">Lifestyle-heavy by design — sell the destination, not the paperwork. Shared across all three domains.</p>
+    <div class="clip-grid">
+      <label class="clip">
+        <input type="checkbox" data-id="7" data-cluster="residency">
+        <div>
+          <div class="clip-title"><span class="clip-num">07</span> Café terrace scene</div>
+          <p class="clip-desc">Foreign-looking couple (40s) at an outdoor Asunción café table, relaxed conversation, city life moving behind them, warm afternoon light.</p>
+        </div>
+      </label>
+      <label class="clip">
+        <input type="checkbox" data-id="8" data-cluster="residency">
+        <div>
+          <div class="clip-title"><span class="clip-num">08</span> Market walk</div>
+          <p class="clip-desc">Handheld-style walk through a lively Paraguayan market or Mercado 4-style street — color, motion, produce stalls, everyday life energy.</p>
+        </div>
+      </label>
+      <label class="clip">
+        <input type="checkbox" data-id="9" data-cluster="residency">
+        <div>
+          <div class="clip-title"><span class="clip-num">09</span> Riverside calm / new life</div>
+          <p class="clip-desc">Quiet shot at Costanera de Asunción or a riverside park, sunset, person walking slowly — "peaceful new chapter."</p>
+        </div>
+      </label>
+      <label class="clip">
+        <input type="checkbox" data-id="10" data-cluster="residency">
+        <div>
+          <div class="clip-title"><span class="clip-num">10</span> Rooftop / skyline at dusk</div>
+          <p class="clip-desc">Person standing on a rooftop terrace overlooking Asunción at dusk, drink in hand, reflective/aspirational mood.</p>
+        </div>
+      </label>
+      <label class="clip">
+        <input type="checkbox" data-id="11" data-cluster="residency">
+        <div>
+          <div class="clip-title"><span class="clip-num">11</span> Everyday errand normalcy</div>
+          <p class="clip-desc">Someone withdrawing cash / paying with a card at a modern PY storefront, casual — "life here just works."</p>
+        </div>
+      </label>
+      <label class="clip">
+        <input type="checkbox" data-id="12" data-cluster="residency">
+        <div>
+          <div class="clip-title"><span class="clip-num">12</span> Passport + city establishing combo</div>
+          <p class="clip-desc">Close-up of a passport/document on a café table, city visible softly blurred behind — gestures at "process" without dry paperwork footage.</p>
+        </div>
+      </label>
+    </div>
+  </section>
+
+  <div class="howto">
+    <h3 class="label">How to use this</h3>
+    <p>Check the clips you want. Each one can render as 16:9 (site hero loop), 9:16 (social), or both — say the format when you send the list back.</p>
+    <p>Shared cluster footage can be reused/cropped across all three domains in each group — no need to generate separately per site unless you want site-specific variation.</p>
+    <div class="selection-line" id="selection-line">Selected: <span class="none">none yet</span></div>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var STORAGE_KEY = "clip-shortlist-selection";
+    var boxes = Array.prototype.slice.call(document.querySelectorAll('.clip input[type="checkbox"]'));
+    var line = document.getElementById("selection-line");
+
+    function load() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function save(ids) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+      } catch (e) {}
+    }
+
+    function render() {
+      var checked = boxes.filter(function (b) { return b.checked; }).map(function (b) { return b.dataset.id; });
+      boxes.forEach(function (b) {
+        b.closest(".clip").classList.toggle("done", b.checked);
+      });
+      if (checked.length === 0) {
+        line.innerHTML = 'Selected: <span class="none">none yet</span>';
+      } else {
+        line.textContent = "Selected: " + checked.sort(function (a, b) { return a - b; }).join(", ");
+      }
+      save(checked);
+    }
+
+    var saved = load();
+    boxes.forEach(function (b) {
+      if (saved.indexOf(b.dataset.id) !== -1) b.checked = true;
+      b.addEventListener("change", render);
+    });
+    render();
+  })();
+</script>
