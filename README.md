@@ -21,8 +21,9 @@ por los componentes.
 
 | Archivo | Qué controla |
 |---|---|
-| **`src/site.ts`** | Número de WhatsApp, teléfono, RUC, horarios, redes, ciudades, navegación |
+| **`src/site.ts`** | Número de WhatsApp, teléfono, RUC, horarios, redes, ciudades, navegación, clientes, reseñas |
 | **`src/servicios.ts`** | Los seis servicios: nombre, titular, detalle y entregables |
+| **`src/preguntas.ts`** | Las preguntas frecuentes |
 | **`src/media.ts`** | Todas las URLs de video e imagen |
 
 El número de WhatsApp existe en **un solo lugar** (`WA_NUMBER`). Cambiarlo es
@@ -56,15 +57,31 @@ del manifiesto → cambiar el valor en `media.ts` a `/media/<archivo>` → poner
 | 01 | Hero + carrusel de reels | `night` | Pantalla completa, carrusel 3D vertical |
 | 02 | Problema | `bone` | Titular a la izquierda + tres líneas numeradas |
 | 03 | Servicios | `sand` | Seis filas numeradas |
-| 04 | Cómo trabajamos | `bone` | Tres pasos, riel numerado |
-| 05 | Ideal si / Todavía no | `sand` | Dos columnas espejadas |
-| 06 | Preguntas | `bone` | `<details>` nativo |
-| 07 | Contacto | `ink` | Cierre oscuro + formulario |
-| 08 | Footer | `ink` | — |
+| 04 | Rubros | `ink` | Cinta a sangre |
+| 05 | Cómo trabajamos | `bone` | Tres pasos, riel numerado |
+| 06 | Ideal si / Todavía no | `sand` | Dos columnas espejadas |
+| 07 | Prueba | `bone` | Clientes y reseñas — **no se renderiza si no hay datos** |
+| 08 | Preguntas | `bone` | `<details>` nativo |
+| 09 | Contacto | `ink` | Cierre oscuro + formulario |
+| 10 | Footer | `ink` | — |
 
-Los fondos alternan `bone → sand → bone`; el hero y el cierre son los dos
-bloques oscuros, así la página abre y cierra en oscuro con todo lo claro en el
-medio.
+Los fondos alternan `bone → sand → bone`. El hero y el cierre son los bloques
+oscuros de los extremos; **Rubros es el único respiro oscuro del cuerpo** y
+corta la seguidilla de secciones claras de puro texto que va de Problema a
+Preguntas.
+
+### La sección Prueba
+
+`CLIENTES` y `RESENAS` en `site.ts` están vacíos, así que `Prueba` devuelve
+`null` y la página no tiene ni un hueco: no hay placeholder, no hay
+"próximamente", no hay logos grises de relleno.
+
+El andamiaje existe igual para que cargar un cliente el día que haya permiso
+por escrito sea editar `site.ts` y nada más. Si la sección no existiera, ese
+día alguien la improvisa con prisa y termina publicando un testimonio sin
+apellido. `RESENAS` pide `nombre` y `negocio` completos a propósito: un
+testimonio firmado "M.G., cliente satisfecho" no convence a nadie, y en un
+mercado del tamaño de Asunción levanta más sospecha que si no estuviera.
 
 ### Diseño
 
@@ -103,6 +120,33 @@ Tigo/Personal/Claro):
 - Con ahorro de datos (`saveData`, 2g) o `prefers-reduced-motion` **no se
   descarga ni un MP4**: el carrusel queda como galería de pósters, navegable
   con las flechas, los puntos y el teclado.
+
+### JSON-LD generado en el build
+
+`vite.config.ts` tiene un plugin que inyecta dos bloques de schema derivados de
+los mismos arrays que renderiza la página:
+
+```
+FAQPage  ← src/preguntas.ts
+Service  ← src/servicios.ts
+```
+
+El `ProfessionalService` sigue escrito a mano en `index.html`, porque son datos
+del negocio que no viven en ningún array.
+
+La razón de generarlos: escribir el schema a mano garantiza que se
+desincronice. Alguien edita una respuesta en el acordeón, el marcado se queda
+con la vieja, y Google muestra en el resultado enriquecido una respuesta que el
+sitio ya no da — que además es motivo de penalización, porque marcar como FAQ
+un texto que no está en la página va contra las políticas de datos
+estructurados.
+
+Verificar después de cada build:
+
+```bash
+npm run build
+grep -c 'application/ld+json' dist/index.html   # 3
+```
 
 ---
 
@@ -172,6 +216,11 @@ Corrido con Chromium real sobre el build de producción:
 - Carrusel navegable por teclado (← →); las tarjetas del fondo quedan fuera del
   tabulado y del árbol de accesibilidad
 - Menú móvil cierra con Escape
+- Link "Saltar al contenido" como primera parada de tabulación — sin él, llegar
+  al cuerpo con teclado son unas quince tabulaciones, porque el carrusel del
+  hero es enfocable y está antes que todo
+- Tres bloques JSON-LD válidos en el HTML servido (`ProfessionalService`,
+  `FAQPage` con 6 preguntas, `ItemList` con los 6 servicios)
 - Áreas táctiles ≥44px (los puntos del carrusel son de 26px, sobre el mínimo de
   24px de WCAG 2.2; un link en línea dentro de prosa está exento por 2.5.8)
 - Cero errores de JS · `npm audit`: 0 vulnerabilidades
@@ -193,11 +242,9 @@ falten los datos.
 - [ ] **Horarios reales** — `HORARIO` tiene un valor asumido
 - [ ] **Instagram y Facebook** — `SOCIAL`. Para una agencia de contenido son la
       prueba de trabajo más directa que hay: sin ellos falta el respaldo obvio
-- [ ] **Clientes reales** — `CLIENTES` está vacío a propósito. El muro de logos
-      aparece solo cuando haya permiso por escrito
-- [ ] **Reseñas y casos** — no hay sección de testimonios ni métricas de
-      campaña. No se inventan: cuando haya resultados que se puedan mostrar
-      con permiso del cliente, se agregan
+- [ ] **Clientes reales** — `CLIENTES` está vacío a propósito. La sección
+      Prueba aparece sola cuando haya permiso por escrito
+- [ ] **Reseñas** — `RESENAS` vacío. Nombre y negocio completos, o no va
 - [ ] Generar los 8 medios (`HIGGSFIELD-PROMPTS.md`)
 - [ ] Imagen OG (prompt OG) → `public/og-contenido.jpg`
 - [ ] Variables `VENDERCRM_*` en Hostinger
@@ -218,6 +265,10 @@ falten los datos.
   trajeron.
 - **La sección "Todavía no, si…" cruza a sitiosweb.com.py** para quien necesita
   el sitio antes que el contenido.
+- **La lista de Rubros es el alcance que se atiende, no una lista de casos
+  hechos.** Por eso dice "estos son los que atendemos" y no "estos los tenemos
+  estudiados": lo segundo afirma experiencia previa en cada rubro, que es
+  justamente lo que todavía no se puede respaldar.
 - **La barra fija de móvil aparece recién al salir del hero.** Dentro del hero
   el CTA "Empezar" ya está a la vista y la barra taparía el carrusel, que es
   justamente lo que hay que mirar. No lleva precio: no hay lista pública.

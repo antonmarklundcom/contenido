@@ -54,6 +54,28 @@ export const SOCIAL = {
  */
 export const CLIENTES: { nombre: string; logo: string }[] = [];
 
+/**
+ * Reseñas reales, con permiso. También vacío a propósito.
+ *
+ * `nombre` y `negocio` van completos: un testimonio firmado "M.G., cliente
+ * satisfecho" no convence a nadie y en un mercado del tamaño de Asunción
+ * levanta más sospecha que si no estuviera.
+ *
+ * `servicio` es el id de `servicios.ts`, para poder mostrar la reseña al lado
+ * del servicio que la generó cuando haya varias.
+ *
+ * Mientras este array esté vacío la sección entera no se renderiza — no hay
+ * placeholder, no hay "próximamente", no queda un hueco en la página.
+ */
+export type Resena = {
+  nombre: string;
+  negocio: string;
+  texto: string;
+  servicio: string;
+};
+
+export const RESENAS: Resena[] = [];
+
 export const CIUDADES = [
   'Asunción',
   'Luque',

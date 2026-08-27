@@ -1,39 +1,14 @@
 import Reveal from './Reveal';
+import { PREGUNTAS } from '../preguntas';
 
 /**
  * SECCIÓN 06 — Preguntas. `<details>` nativo: sin estado de React, sin
  * librería de acordeón, y funciona con el JS apagado.
  *
- * Ninguna respuesta promete un precio, un plazo ni un resultado. Las dos
- * primeras son las que más frenan una consulta por WhatsApp en Paraguay:
- * cuánto sale y de quién queda el material.
+ * El contenido vive en `src/preguntas.ts` porque el JSON-LD de `FAQPage` se
+ * arma con el mismo array en tiempo de build. Editar una respuesta acá
+ * actualiza el schema solo.
  */
-const PREGUNTAS = [
-  {
-    q: '¿Trabajan por proyecto o por mes?',
-    a: 'Las dos formas. Una producción puntual se cotiza por proyecto. Redes, UGC y pauta funcionan mucho mejor con un acuerdo mensual, porque lo que da resultado es la constancia, no la pieza suelta.',
-  },
-  {
-    q: '¿Cuánto cuesta?',
-    a: 'Depende del alcance: cuántas piezas, cuántas jornadas de filmación y si hay pauta o creadores de por medio. Por eso no hay lista de precios pública. Contanos qué necesitás y te pasamos un presupuesto sin costo.',
-  },
-  {
-    q: '¿El material queda a mi nombre?',
-    a: 'Sí. Las piezas finales y los archivos originales son de tu marca. Cuando hay creadores o influencers, los derechos de uso quedan por escrito antes de que salga la primera publicación: por cuánto tiempo, en qué canales y para qué campañas.',
-  },
-  {
-    q: '¿Filman fuera de Asunción?',
-    a: 'La base es Asunción y el Gran Asunción, y ahí trabajamos sin recargo. Al interior vamos coordinando la fecha y los viáticos con anticipación.',
-  },
-  {
-    q: '¿Cómo usan la inteligencia artificial?',
-    a: 'Como herramienta, no como reemplazo. Acelera guiones, variantes de copy, imágenes, video y locución. Todo pasa después por el tono de la marca, por SEO y por revisión de una persona antes de publicarse. Si un contenido es generado con IA y corresponde aclararlo, se aclara.',
-  },
-  {
-    q: '¿Tengo que estar en la grabación?',
-    a: 'En la primera conviene que estés: es donde se define el tono. Después trabajamos con un guion aprobado y coordinamos todo por WhatsApp.',
-  },
-];
 
 export default function Preguntas() {
   return (

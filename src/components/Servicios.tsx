@@ -32,13 +32,22 @@ export default function Servicios() {
                 i === SERVICIOS.length - 1 ? 'border-b' : ''
               }`}
             >
-              <div>
-                <p className="label text-[0.62rem] text-ink-muted m-0 mb-3 !max-w-none">
-                  {s.n} / {s.nombre}
-                </p>
-                <h3 className="m-0 max-w-[14ch] font-medium tracking-head leading-[0.98] text-[clamp(1.55rem,3.4vw,2.35rem)]">
-                  {s.titulo}
-                </h3>
+              <div className="flex items-start gap-4 md:gap-6">
+                <span
+                  aria-hidden="true"
+                  className="hidden sm:block shrink-0 text-ink/50 font-medium tracking-display leading-[0.8] text-[clamp(2.4rem,4.5vw,3.6rem)]"
+                >
+                  {s.n}
+                </span>
+                <div>
+                  <p className="label text-[0.62rem] text-ink-muted m-0 mb-3 !max-w-none">
+                    <span className="sm:hidden">{s.n} / </span>
+                    {s.nombre}
+                  </p>
+                  <h3 className="m-0 max-w-[14ch] font-medium tracking-head leading-[0.98] text-[clamp(1.55rem,3.4vw,2.35rem)]">
+                    {s.titulo}
+                  </h3>
+                </div>
               </div>
 
               <div>
