@@ -1,59 +1,86 @@
-import HeroVideoCycle from './HeroVideoCycle';
-import Navbar from './Navbar';
+import CarruselReels from './CarruselReels';
+import { HERO_BG } from '../media';
 import { wa } from '../site';
 
 /**
- * SECCIÓN 1 — HERO. Full-bleed, video de fondo, texto abajo.
- * mb-[-25px] deja que la sección crema de abajo lo pise por 25px:
- * ese es uno de los solapes de borde que exige el design system.
+ * SECCIÓN 01 — HERO. Pantalla completa, fondo oscuro, carrusel abajo.
  *
- * Sin animación de entrada en el texto: retrasa el LCP y en 3G se ve lento.
+ * El `-mt-[66px]` mete el header adentro del hero: la barra flota sobre la
+ * imagen y recién se vuelve sólida al salir de acá.
+ *
+ * Tres capas de degradado sobre el fondo, no una: la de arriba protege el
+ * titular, la del medio abre el centro para que se vea la imagen y la de abajo
+ * cierra en #0E1723 exacto para que el corte con la sección siguiente no se vea.
  */
 export default function Hero() {
   return (
-    <section id="top" className="relative h-screen h-[100svh] overflow-hidden mb-[-25px]">
-      <HeroVideoCycle />
+    <section
+      id="inicio"
+      className="relative z-[1] grid grid-rows-[auto_minmax(0,1fr)] min-h-[100svh] -mt-[66px] px-4 sm:px-6 lg:px-8 pt-[clamp(76px,10svh,124px)] overflow-hidden isolate bg-night"
+    >
+      <img
+        src={HERO_BG.src}
+        alt=""
+        aria-hidden="true"
+        fetchPriority="high"
+        className="absolute inset-0 -z-[3] w-full h-full object-cover"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-[2]"
+        style={{
+          background:
+            'radial-gradient(120% 80% at 50% 34%, rgba(6,10,16,.10) 0%, rgba(6,10,16,.42) 48%, rgba(6,10,16,.78) 100%)',
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-[1]"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(6,10,16,.62) 0%, rgba(6,10,16,.18) 26%, rgba(6,10,16,.22) 54%, rgba(6,10,16,.72) 88%, #0E1723 100%)',
+        }}
+      />
 
-      {/* Doble capa: velo parejo + degradado hacia abajo, para que el texto
-          inferior tenga contraste sobre cualquier frame del reel. */}
-      <div className="absolute inset-0 bg-black/20" />
-      <div className="absolute inset-0 scrim" />
-
-      <Navbar />
-
-      <div className="relative z-10 h-full flex flex-col justify-end items-center pb-24 md:pb-16 px-6">
-        <p className="eyebrow text-white/80 mb-5">Asunción · Gran Asunción</p>
-
-        <h1 className="text-center text-5xl sm:text-7xl md:text-8xl lg:text-[96px] font-normal text-white leading-[1.1] tracking-tight">
-          <span className="block">Mostrá tu negocio</span>
-          <span className="block">
-            <em className="not-italic" style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>
-              como se merece
-            </em>
-          </span>
-        </h1>
-
-        <p className="mt-6 text-center text-white/85 text-[17px] md:text-base font-medium max-w-[460px]">
-          Video y contenido para inmobiliarias, concesionarias, clínicas y comercios de Asunción y el Gran Asunción.
+      <div className="relative z-[5] grid justify-items-center w-full max-w-[940px] mx-auto text-bone text-center">
+        <p className="label flex items-center gap-2.5 m-0 mb-[clamp(14px,2.2svh,22px)] text-bone/70 text-[0.58rem] sm:text-[0.68rem] !max-w-none">
+          <span aria-hidden="true" className="inline-block w-[22px] h-px bg-acid" />
+          Agencia de contenido · Paraguay
         </p>
 
-        <div className="mt-8 bg-black/25 backdrop-blur-md rounded-md2 flex items-center pl-6 pr-1 py-1 gap-4">
-          <span className="hidden sm:inline text-white text-sm font-medium">
-            Sin producciones eternas. Sin presupuestos inflados.
-          </span>
-          <span className="sm:hidden text-white text-sm font-medium">Sin producciones eternas.</span>
+        <h1 className="m-0 max-w-[19ch] font-medium tracking-display leading-[0.9] text-[clamp(2.45rem,min(6.2vw,7.9svh),4.7rem)]">
+          Contenido que la gente mira
+          <span className="block text-bone/55">y marcas que la gente elige</span>
+        </h1>
+
+        <p className="max-w-[38ch] mt-[clamp(16px,2.6svh,26px)] text-bone/80 text-[clamp(.98rem,2.2vw,1.12rem)] leading-relaxed">
+          Estrategia, producción y distribución. De la idea al reel publicado, y a la campaña que lo empuja.
+        </p>
+
+        <div className="flex flex-wrap justify-center gap-2.5 mt-[clamp(18px,3svh,30px)]">
+          <a
+            href="#servicios"
+            className="inline-flex items-center justify-center min-h-[52px] px-6 rounded-full border border-bone/35 bg-bone/10 text-bone label text-[0.7rem] backdrop-blur-sm whitespace-nowrap hover:bg-bone/20 transition-colors duration-200 ease-hover"
+          >
+            Ver servicios
+          </a>
           <a
             href={wa('hero')}
             target="_blank"
             rel="noopener noreferrer"
             data-ev="whatsapp_click"
             data-ev-loc="hero"
-            className="shrink-0 bg-white text-black text-sm font-medium px-5 py-3.5 rounded-md2 hover:bg-white/90 transition-colors duration-200 ease-hover"
+            className="inline-flex items-center justify-center gap-3.5 min-h-[52px] pl-6 pr-4 rounded-full bg-acid text-ink label text-[0.7rem] shadow-cta whitespace-nowrap hover:brightness-95 transition-[filter] duration-200 ease-hover"
           >
-            Escribinos
+            Empezar
+            <span aria-hidden="true" className="grid place-items-center w-[30px] h-[30px] -my-1 rounded-full bg-ink text-bone">
+              ↗
+            </span>
           </a>
         </div>
       </div>
+
+      <CarruselReels />
     </section>
   );
 }

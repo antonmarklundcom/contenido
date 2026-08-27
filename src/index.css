@@ -5,67 +5,72 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    background: #14150f;
   }
 
   body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Instrument Sans', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: clip;
-    background: #f6e4cf;
-    color: #321c04;
-    /* Deja lugar para la barra fija de móvil (WhatsApp / Llamar). */
-    padding-bottom: 88px;
+    background: #f7f5f2;
+    color: #14150f;
   }
 
-  @media (min-width: 768px) {
-    body {
-      padding-bottom: 0;
-    }
-  }
-
-  /* Cuerpo de texto: 17px mínimo, medida ≤65ch. Regla del design system. */
+  /* Cuerpo de texto: medida ≤65ch. Los titulares se limitan por su propia clase. */
   p {
     max-width: 65ch;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
   }
 
   :focus-visible {
-    outline: 2px solid #b4762c;
-    outline-offset: 3px;
+    outline: 3px solid #5a7014;
+    outline-offset: 4px;
     border-radius: 4px;
+  }
+
+  /* El acordeón de Preguntas usa <details> nativo: sin JS, sin librería. */
+  summary {
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details[open] [data-toggle] {
+    transform: rotate(45deg);
   }
 }
 
 @layer components {
-  /* Grano: se aplica a TODA sección oscura. Es el upgrade más barato que existe
-     y además disimula la suavidad de las imágenes generadas a 1024px. */
+  /* Etiqueta monoespaciada: el único uso de JetBrains Mono en todo el sitio. */
+  .label {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  /* Grano sobre secciones oscuras. Disimula el banding del degradado del hero. */
   .grain::after {
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.055;
+    opacity: 0.05;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
-  /* Scrim: cualquier texto sobre cualquier imagen o video. Nunca texto crudo. */
-  .scrim::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(180deg, rgb(0 0 0 / 0.15) 0%, rgb(0 0 0 / 0.5) 60%, rgb(0 0 0 / 0.75) 100%);
-  }
-
-  .eyebrow {
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 600;
   }
 }
 
-/* Presupuesto de movimiento: entrada 200–400ms, easing de entrada.
+/* Presupuesto de movimiento: entrada 200–700ms, easing de entrada.
    Se apaga por completo con prefers-reduced-motion. */
 @media (prefers-reduced-motion: reduce) {
   html {

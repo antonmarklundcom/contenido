@@ -1,29 +1,47 @@
-import { MessageCircle, Phone } from 'lucide-react';
-import { PHONE_TEL, wa } from '../site';
+import { useEffect, useState } from 'react';
+import { TRUST, wa } from '../site';
 
-/** Barra fija inferior, solo bajo 768px. WhatsApp primario, llamada secundaria. */
+/**
+ * Barra de conversión fija, solo bajo 768px.
+ *
+ * Aparece recién al salir del hero: en el hero el CTA "Empezar" ya está a la
+ * vista y la barra le taparía el carrusel, que es justamente lo que tiene que
+ * mirar. No lleva precio — no hay lista de precios pública.
+ */
 export default function BarraMovil() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const sync = () => {
+      const hero = document.getElementById('inicio');
+      setVisible(hero ? hero.getBoundingClientRect().bottom < 0 : window.scrollY > 600);
+    };
+    sync();
+    window.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', sync);
+      window.removeEventListener('resize', sync);
+    };
+  }, []);
+
+  if (!visible) return null;
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden flex bg-ink border-t border-cream/10">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[800] flex items-center justify-between gap-3 px-3.5 pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom,0px))] bg-ink/95 backdrop-blur-md border-t border-bone/15">
+      <div className="grid gap-0.5 text-bone">
+        <span className="label text-[0.52rem] text-bone/50">{TRUST.presupuesto}</span>
+        <strong className="text-base font-medium tracking-head">Contale a un humano</strong>
+      </div>
       <a
         href={wa('barra-movil')}
         target="_blank"
         rel="noopener noreferrer"
         data-ev="whatsapp_click"
         data-ev-loc="barra-movil"
-        className="flex-1 min-h-[56px] flex items-center justify-center gap-2 text-cream text-sm font-medium"
+        className="label text-[0.66rem] inline-flex items-center justify-center min-h-[48px] px-6 rounded-full bg-acid text-ink"
       >
-        <MessageCircle size={18} aria-hidden="true" />
-        WhatsApp
-      </a>
-      <a
-        href={`tel:${PHONE_TEL}`}
-        data-ev="call_click"
-        data-ev-loc="barra-movil"
-        className="flex-1 min-h-[56px] flex items-center justify-center gap-2 text-cream/70 text-sm font-medium border-l border-cream/10"
-      >
-        <Phone size={18} aria-hidden="true" />
-        Llamar
+        Escribir
       </a>
     </div>
   );

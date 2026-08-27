@@ -1,53 +1,65 @@
 import Reveal from './Reveal';
 
+/**
+ * SECCIÓN 04 — Cómo trabajamos. Tres pasos, riel numerado.
+ *
+ * Tres y no cinco: el proceso real tiene más etapas, pero lo que el visitante
+ * necesita saber antes de escribir es qué pasa primero, qué recibe y cuándo se
+ * mide. El detalle fino se conversa.
+ */
 const PASOS = [
   {
-    titulo: 'Hablamos por WhatsApp',
-    texto: 'Nos contás qué querés mostrar y para dónde va. En el mismo día te decimos qué se puede hacer y cuánto sale.',
+    n: '01',
+    titulo: 'Estrategia',
+    texto:
+      'Entendemos el negocio, el público y qué tiene que pasar después de ver la pieza. De ahí sale el plan y el guion, no al revés.',
   },
   {
-    titulo: 'Armamos el guion',
-    texto: 'Definimos las tomas, el orden y los textos antes de encender la cámara. Vos lo aprobás y recién ahí grabamos.',
+    n: '02',
+    titulo: 'Producción',
+    texto:
+      'Filmamos, fotografiamos, editamos. Según el servicio entra un creador de UGC, un influencer o la IA como herramienta — siempre con dirección nuestra.',
   },
   {
-    titulo: 'Grabamos en tu lugar',
-    texto: 'Vamos al local, a la propiedad o al consultorio. Una jornada, equipo propio y sin frenar tu atención al público.',
-  },
-  {
-    titulo: 'Entregamos listo',
-    texto: 'Recibís las piezas editadas, subtituladas y en los formatos de cada red. Listas para publicar, sin retoques de tu lado.',
+    n: '03',
+    titulo: 'Distribución y medición',
+    texto: 'Publicamos donde corresponde, empujamos con pauta si hace falta y mostramos los números al cierre del mes.',
   },
 ];
 
-/** SECCIÓN 6 — PROCESO. Patrón P5 (riel numerado). Vertical bajo 768px. */
 export default function Proceso() {
   return (
-    <section id="proceso" className="bg-base py-20 md:py-32 px-6">
-      <div className="max-w-6xl mx-auto">
-        <p className="eyebrow text-accent-deep mb-5">Cómo trabajamos</p>
-        <h2 className="text-3xl sm:text-4xl lg:text-[46px] leading-[1.15] tracking-tight font-normal text-ink max-w-2xl">
-          Cuatro pasos, sin sorpresas
-        </h2>
+    <section id="proceso" className="bg-bone px-4 sm:px-6 lg:px-8 py-20 md:py-32 scroll-mt-[70px]">
+      <div className="w-full max-w-[1120px] mx-auto">
+        <Reveal>
+          <div className="mb-9 md:mb-14">
+            <p className="label text-ink-muted m-0 mb-3.5 !max-w-none">De la idea a la publicación</p>
+            <h2 className="m-0 font-medium tracking-display leading-[0.9] text-[clamp(2.3rem,6vw,4.6rem)]">
+              Cómo trabajamos
+            </h2>
+          </div>
+        </Reveal>
 
-        <ol className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4 md:gap-8">
+        <div className="grid gap-6 md:gap-12 md:grid-cols-3">
           {PASOS.map((paso, i) => (
-            <Reveal key={paso.titulo} delay={i * 70}>
-              {/* pt-14 deja el número gigante APENAS por encima del título:
-                  se lee como capa, no como choque. Con pt-10 los glifos se
-                  cruzaban con la línea del título. */}
-              <li className="relative pt-14 border-t border-ink/10 h-full">
-                <span
-                  aria-hidden="true"
-                  className="absolute top-0 left-0 text-[64px] leading-none font-normal text-accent/25 tabular-nums select-none"
-                >
-                  0{i + 1}
+            <Reveal key={paso.n} delay={i * 70}>
+              <article className="pt-4 border-t border-ink/15 h-full">
+                <span className="block text-ink/50 font-medium tracking-display leading-none text-[clamp(2.8rem,5.5vw,4.4rem)]">
+                  {paso.n}
                 </span>
-                <h3 className="relative text-lg font-medium text-ink">{paso.titulo}</h3>
-                <p className="mt-3 text-ink-muted text-[15px] leading-relaxed">{paso.texto}</p>
-              </li>
+                <h3 className="mt-5 mb-2.5 font-medium tracking-head leading-tight text-[clamp(1.25rem,2.4vw,1.55rem)]">
+                  {paso.titulo}
+                </h3>
+                <p className="max-w-[36ch] m-0 text-ink-muted leading-relaxed">{paso.texto}</p>
+                {i === PASOS.length - 1 && (
+                  <small className="label text-[0.62rem] inline-block mt-5 px-3 py-2 rounded-full border border-ink/15 text-ink-muted">
+                    Por proyecto o por mes
+                  </small>
+                )}
+              </article>
             </Reveal>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );

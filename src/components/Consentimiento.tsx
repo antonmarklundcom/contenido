@@ -59,7 +59,7 @@ export default function Consentimiento() {
     <div
       role="dialog"
       aria-label="Consentimiento de cookies"
-      className="fixed left-4 right-4 bottom-[72px] md:bottom-6 md:left-6 md:right-auto md:max-w-md z-50 bg-cream rounded-md2 shadow-depth-2 border border-ink/10 p-5"
+      className="fixed left-4 right-4 bottom-[84px] md:bottom-6 md:left-6 md:right-auto md:max-w-md z-[850] bg-bone rounded-lg2 shadow-pop border border-ink/15 p-5"
     >
       <p className="text-ink text-[15px] leading-relaxed">
         Usamos cookies solo para entender cómo se navega el sitio. Podés rechazarlas y el sitio funciona igual.
@@ -68,14 +68,14 @@ export default function Consentimiento() {
         <button
           type="button"
           onClick={() => responder('aceptado')}
-          className="min-h-[48px] px-5 rounded-full bg-ink text-cream text-xs uppercase tracking-wide font-medium hover:bg-ink-hover transition-colors duration-200 ease-hover"
+          className="label text-[0.62rem] min-h-[48px] px-5 rounded-full bg-acid text-ink hover:brightness-95 transition-[filter] duration-200 ease-hover"
         >
           Aceptar
         </button>
         <button
           type="button"
           onClick={() => responder('rechazado')}
-          className="min-h-[48px] px-5 rounded-full bg-muted text-ink text-xs uppercase tracking-wide font-medium hover:bg-muted-hover transition-colors duration-200 ease-hover"
+          className="label text-[0.62rem] min-h-[48px] px-5 rounded-full border border-ink/20 text-ink hover:bg-ink/5 transition-colors duration-200 ease-hover"
         >
           Rechazar
         </button>

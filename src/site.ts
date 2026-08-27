@@ -28,10 +28,8 @@ export function wa(context: string): string {
  * desaparece. Nunca inventar RUC, años, cantidad de trabajos ni garantías.
  */
 export const TRUST = {
-  /** Completar con el RUC real. Vacío = la franja no muestra la fila. */
+  /** Completar con el RUC real. Vacío = la fila no se muestra. */
   ruc: '',
-  /** Completar si hay facturación legal habilitada. */
-  facturaLegal: true,
   cobertura: 'Asunción y Gran Asunción',
   presupuesto: 'Presupuesto sin costo',
   respuesta: 'Respondemos por WhatsApp',
@@ -41,7 +39,8 @@ export const HORARIO = 'Lunes a viernes · 8:00 a 18:00';
 
 /**
  * Redes. Vacío = el link no se renderiza. En Paraguay Facebook e Instagram
- * pesan más que en otros mercados: completarlos antes de lanzar.
+ * pesan más que en otros mercados: completarlos antes de lanzar. Para una
+ * agencia de contenido son además la prueba de trabajo más directa que hay.
  */
 export const SOCIAL = {
   instagram: '',
@@ -51,7 +50,7 @@ export const SOCIAL = {
 /**
  * Clientes reales. Se deja VACÍO a propósito: un muro de logos inventado es
  * exactamente el tipo de cosa que en Paraguay se verifica. Cuando haya
- * permisos por escrito, cargar acá y el bloque aparece solo.
+ * permisos por escrito, cargar acá.
  */
 export const CLIENTES: { nombre: string; logo: string }[] = [];
 
@@ -63,4 +62,11 @@ export const CIUDADES = [
   'Lambaré',
   'Capiatá',
   'Mariano Roque Alonso',
+];
+
+/** Navegación principal. Un solo array: header desktop, menú móvil y footer. */
+export const NAV = [
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Cómo trabajamos', href: '#proceso' },
+  { label: 'Preguntas', href: '#preguntas' },
 ];

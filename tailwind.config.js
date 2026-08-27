@@ -4,45 +4,39 @@ export default {
   theme: {
     extend: {
       colors: {
-        // WARM CRAFT track — resolved tokens. Do not introduce colours outside this block.
-        base: '#F6E4CF', // section background (cream)
-        ink: '#321C04', // primary text / dark buttons
-        'ink-muted': '#6B4A24', // muted body on cream — 6.3:1, passes AA
-        cream: '#FFF9F2', // light surface (icon circles, cards)
-        muted: '#D9C4AA', // dividers, secondary button bg
-        'muted-hover': '#CEBA9E',
-        'ink-hover': '#1F1003',
-        // UN solo acento (ocre), en dos profundidades del mismo tono:
-        //   accent      → sobre fondo OSCURO y usos decorativos. 4.27:1 sobre ink.
-        //   accent-deep → texto chico sobre crema. 4.75:1, pasa AA.
-        // #B4762C sobre crema da 3.04:1 y NO pasa: nunca usarlo para texto ahí.
-        accent: '#B4762C',
-        'accent-deep': '#8A5A1E',
+        // ACID EDITORIAL track — tokens resueltos. No introducir colores fuera de este bloque.
+        bone: '#F7F5F2', // fondo claro principal
+        sand: '#EBE7DF', // fondo claro alterno (secciones pares)
+        ink: '#14150F', // texto sobre claro / fondo de secciones oscuras
+        'ink-muted': '#63645B', // cuerpo apagado — 5.59:1 sobre bone, 4.94:1 sobre sand
+        night: '#0E1723', // fondo del hero (azul casi negro, para el degradado)
+        // UN solo acento (lima ácido) en dos profundidades del mismo tono:
+        //   acid      → sobre fondo OSCURO y como color de relleno de botones. 14:1 sobre ink.
+        //   acid-deep → texto chico y marcas sobre bone. 5.07:1, pasa AA.
+        // #C8F04A sobre bone da 1,2:1 y NO pasa: nunca usarlo para texto ahí.
+        acid: '#C8F04A',
+        'acid-deep': '#5A7014',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ["'Instrument Serif'", 'Georgia', 'serif'],
+        sans: ["'Instrument Sans'", 'Helvetica', 'Arial', 'sans-serif'],
+        mono: ["'JetBrains Mono'", 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       borderRadius: {
-        sm2: '6px',
         md2: '14px',
-        lg2: '28px',
+        lg2: '22px',
+        xl2: '26px',
+      },
+      letterSpacing: {
+        display: '-0.055em',
+        head: '-0.045em',
       },
       boxShadow: {
-        'depth-1': '0 1px 2px rgb(0 0 0/.04), 0 4px 12px rgb(0 0 0/.06)',
-        'depth-2': '0 2px 4px rgb(0 0 0/.06), 0 16px 40px rgb(0 0 0/.10)',
-      },
-      keyframes: {
-        'fade-in-down': {
-          '0%': { opacity: '0', transform: 'translateY(-8px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-      },
-      animation: {
-        'fade-in-down': 'fade-in-down 0.2s ease-out',
+        card: '0 26px 64px rgb(0 0 0 / 0.42), inset 0 0 0 1px rgb(255 255 255 / 0.08)',
+        cta: '0 12px 32px rgb(6 10 16 / 0.35)',
+        pop: '0 20px 60px rgb(20 21 15 / 0.18)',
       },
       transitionTimingFunction: {
-        entrance: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        entrance: 'cubic-bezier(0.22, 0.7, 0.2, 1)',
         hover: 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },

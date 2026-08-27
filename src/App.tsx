@@ -1,45 +1,45 @@
 import BarraMovil from './components/BarraMovil';
 import Consentimiento from './components/Consentimiento';
 import Contacto from './components/Contacto';
-import Declaracion from './components/Declaracion';
+import Encaje from './components/Encaje';
 import Footer from './components/Footer';
-import FranjaConfianza from './components/FranjaConfianza';
+import Header from './components/Header';
 import Hero from './components/Hero';
-import Nosotros from './components/Nosotros';
+import Preguntas from './components/Preguntas';
+import Problema from './components/Problema';
 import Proceso from './components/Proceso';
 import Servicios from './components/Servicios';
-import Trabajos from './components/Trabajos';
-import WhatsAppFab from './components/WhatsAppFab';
 
 /**
- * Orden de secciones y patrón de layout de cada una.
- * Regla dura: nunca dos patrones iguales seguidos.
+ * Orden de secciones y fondo de cada una.
  *
- *   01 Hero            → full-bleed video + solape de 25px con la 02
- *   02 Nosotros        → P4 dos columnas editoriales + P2 bloque desplazado
- *   03 Servicios       → P1 split asimétrico 5/7 con slider
- *   04 Franja          → P8 cinta full-bleed
- *   05 Trabajos        → P7 columna sticky + tarjetas que scrollean
- *   06 Proceso         → P5 riel numerado
- *   07 Declaración     → P9 statement sobredimensionado (uno por página)
- *   08 Contacto        → P1 espejado 5/7
- *   09 Footer
+ * Regla dura del track: los fondos alternan bone → sand → bone, y el único
+ * bloque oscuro del cuerpo es el cierre. El hero también es oscuro, así que la
+ * página abre y cierra en oscuro con todo lo claro en el medio.
+ *
+ *   01 Hero        → night, pantalla completa + carrusel de reels
+ *   02 Problema    → bone, tres líneas numeradas
+ *   03 Servicios   → sand, seis filas numeradas
+ *   04 Proceso     → bone, tres pasos
+ *   05 Encaje      → sand, dos columnas (ideal si / todavía no)
+ *   06 Preguntas   → bone, acordeón nativo
+ *   07 Contacto    → ink, cierre + formulario
+ *   08 Footer      → ink
  */
 export default function App() {
   return (
     <>
+      <Header />
       <main>
         <Hero />
-        <Nosotros />
+        <Problema />
         <Servicios />
-        <FranjaConfianza />
-        <Trabajos />
         <Proceso />
-        <Declaracion />
+        <Encaje />
+        <Preguntas />
         <Contacto />
       </main>
       <Footer />
-      <WhatsAppFab />
       <BarraMovil />
       <Consentimiento />
     </>
