@@ -6,29 +6,29 @@ solo se resuelve cuando la generación sale por MCP, y pegada a mano termina
 escrita dentro de la imagen.
 
 Por eso cada prompt repite paleta, luz, lente y ambiente: la consistencia entre
-las 14 piezas vive en las palabras, no en un elemento de referencia compartido.
+las 8 piezas vive en las palabras, no en un elemento de referencia compartido.
 
 **Regla que no se rompe:** estas piezas son ilustrativas, tipo stock. Nunca se
 etiquetan como el trabajo de un cliente concreto, nunca llevan el nombre de una
-empresa real, y ninguna cara generada se usa como testimonio. En Paraguay eso se
-verifica.
+empresa real, y ninguna cara generada se usa como testimonio. Para una agencia
+de contenido esto es más delicado que para cualquier otro rubro: lo que se
+muestra en el carrusel se lee como portfolio. Por eso el carrusel dice
+"Piezas producidas por nosotros" y no "Clientes".
 
 ---
 
-## Set mínimo vs. set completo
+## Qué hay que generar
 
-`src/media.ts` ya apunta a placeholders que funcionan, así que el sitio se ve
-terminado desde hoy. Podés generar por tandas:
+Ocho archivos. Seis son el carrusel del hero, uno es el fondo y uno es la
+imagen para compartir.
 
 | Tanda | Piezas | Qué desbloquea |
 |---|---|---|
-| **1 — mínima** | H1–H4 + BG + OG | El hero deja de ser genérico y el link se comparte bien. Es el 80% del impacto. |
-| **2** | T1–T4 | La sección Trabajos pasa a ser tuya. |
-| **3** | S1–S4 | El slider de Servicios queda propio. |
+| **1 — mínima** | R1–R3 + BG + OG | El hero deja de ser genérico y el link se comparte bien. Con tres reels el carrusel ya gira: los otros tres repiten hasta que existan. |
+| **2** | R4–R6 | Los seis servicios tienen su pieza propia. |
 
-Si el presupuesto aprieta: hacé la tanda 1, y en `media.ts` apuntá los slots de
-Servicios a los clips de Trabajos (T1→recorridos, T3→salud, T4→redes). Solo el
-slot `web` queda sin equivalente.
+`src/media.ts` ya apunta a placeholders que funcionan, así que el sitio se ve
+terminado desde hoy.
 
 ---
 
@@ -36,24 +36,29 @@ slot `web` queda sin equivalente.
 
 | | Valor |
 |---|---|
-| Modelo video | **Seedance 1.0 Pro** (movimiento estable, buen costo). Kling 2.5 si querés más detalle en el orbital del auto. |
-| Modelo imagen (BG) | **Nano Banana Pro** o **Seedream v5 Pro**, 1920px |
-| Duración clips | Hero 6–8 s · Servicios 6–8 s · Trabajos 6–10 s |
+| Modelo video | **Seedance 1.0 Pro** (movimiento estable, buen costo). Kling 2.5 si querés más detalle de textura en el UGC. |
+| Modelo imagen (BG y OG) | **Nano Banana Pro** o **Seedream v5 Pro**, 1920px |
+| Duración clips | 6–8 s, en loop |
 | Audio | **Sin audio.** Los `<video>` van `muted`; el audio es peso muerto. |
-| Aspecto | 16:9 hero y trabajos · **1:1 servicios** · 21:9 fondo · 1.91:1 OG |
+| Aspecto | **9:16 vertical** los seis reels · 16:9 el fondo · 1.91:1 el OG |
 
-**Sobre el 1:1 de Servicios:** el panel del slider es 4:3 con `object-cover`.
-Desde 1:1 recorta ~11% arriba y abajo; desde 16:9 recortaría los costados y se
-pierde el encuadre. Generá 1:1 y **mantené la acción centrada**. Si tu modelo no
-ofrece 1:1, usá 4:3 directo.
+**Sobre el 9:16:** las tarjetas del carrusel son verticales. No es un capricho
+de diseño — es el formato en que el cliente va a publicar lo que le
+produzcamos. Un reel horizontal ahí adentro vende el formato equivocado y
+además se recorta feo con `object-cover`.
+
+**Sobre el fondo (BG):** va detrás del H1 con tres capas de degradado encima.
+La de arriba es `rgba(6,10,16,.62)`, así que el texto blanco aguanta — pero
+**el tercio superior de la imagen tiene que ser oscuro igual**. Nada de cielo
+quemado ni de sol en el encuadre: ahí van el titular y los links del header.
 
 **Consejo de consistencia:** generá primero el **frame inicial** como imagen
 (mismo prompt, sin la línea de cámara) y recién después usá image-to-video. Da
 mucho más control sobre paleta y encuadre que ir directo a texto→video.
 
-**Movimiento:** los clips del hero se encadenan con un fundido de 900 ms. Pedí
-siempre un movimiento de cámara **lento y continuo**, sin cortes internos y sin
-arranque/frenada bruscos — así el fundido no se nota.
+**Movimiento:** las tarjetas se ven chicas y en perspectiva. Pedí un movimiento
+de cámara **lento y continuo**, sin cortes internos: un corte interno dentro de
+una tarjeta de 200px de alto se lee como un glitch, no como edición.
 
 ### Bloque negativo (pegar al final de TODOS los prompts)
 
@@ -63,179 +68,122 @@ arranque/frenada bruscos — así el fundido no se nota.
 
 ---
 
-# TANDA 1 — HERO (16:9)
+# TANDA 1 — CARRUSEL DEL HERO (9:16 vertical)
 
-Cuatro clips que se encadenan como showreel. Van detrás del H1, con un velo
-oscuro encima: **buscá contraste medio-bajo y nada de blancos quemados**, o el
-texto blanco se pierde.
+Un reel por servicio, en el mismo orden que `SERVICIOS` en `src/servicios.ts`.
 
-### H1 · `reel-01-inmobiliaria.mp4`
+### R1 · `reel-01-produccion.mp4` — Contenido estratégico
 
 ```
-Slow continuous dolly push forward through a bright contemporary apartment living room in Asunción, Paraguay. Sheer linen curtains diffusing late afternoon sun, warm cream walls, dark walnut furniture, a few tropical plants. Warm documentary cinematography, natural available light, golden-hour warmth, muted palette of cream, deep warm brown and soft ochre, 35mm lens, shallow depth of field, gentle 35mm film grain, calm and premium, no people. Camera moves slowly and continuously at a steady pace, no cuts, no acceleration.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
+Vertical 9:16 cinematic product film. A South American clothing brand studio in Asunción, Paraguay: warm terracotta and off-white walls, a rail of linen garments, tropical daylight filtered through slatted wooden blinds. A stylist's hands adjust a shirt on a mannequin. Shallow depth of field, 50mm lens, natural window light with soft falloff, muted warm palette with deep shadows, gentle film grain. Camera slowly pushes in, one continuous move, no cuts. 7 seconds.
 ```
 
-### H2 · `reel-02-concesionaria.mp4`
+### R2 · `reel-02-redes.mp4` — Gestión de redes sociales
 
 ```
-Slow continuous orbit around the front quarter panel of a clean modern SUV inside a warm-lit showroom in Asunción, Paraguay. Soft reflections travelling across the paint, polished concrete floor, warm tungsten pools of light. Warm documentary cinematography, natural available light mixed with warm practicals, muted palette of cream, deep warm brown and soft ochre, 50mm lens, shallow depth of field, gentle 35mm film grain, calm and premium, no people, no visible badges or brand marks. Camera arcs slowly and continuously, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
+Vertical 9:16 cinematic food film. A modern Paraguayan café counter at golden hour: espresso being poured, steam rising, chipa and pastries on a dark stone counter, terracotta and cream tones, potted tropical plants blurred in the background. Warm low-angle sunlight raking across the surface. 35mm lens, shallow depth of field, muted natural grade, subtle grain. Camera slowly slides sideways past the counter, one continuous move, no cuts. 7 seconds.
 ```
 
-### H3 · `reel-03-clinica.mp4`
+### R3 · `reel-03-ugc.mp4` — Contenido UGC
 
 ```
-Slow continuous dolly along a calm modern medical clinic corridor in Asunción, Paraguay, ending on an open consulting room doorway. Soft daylight through frosted glass, warm oak accents, cream walls, immaculate and quiet. Warm documentary cinematography, natural available light, muted palette of cream, deep warm brown and soft ochre, 35mm lens, shallow depth of field, gentle 35mm film grain, calm, sober and premium, no people, no medical branding. Camera glides slowly and continuously, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
+Vertical 9:16 handheld UGC-style clip. A young Latin American woman's hands unboxing a plain cream-coloured cosmetic jar in a sunlit apartment in Asunción, seen from her point of view. Unbranded packaging, no text on the label. Natural window light, warm domestic palette, slightly imperfect handheld framing, authentic and unpolished, 28mm lens look. Camera drifts gently with the hands, one continuous move, no cuts. 6 seconds.
 ```
 
-### H4 · `reel-04-local.mp4`
+---
+
+# TANDA 2 — CARRUSEL DEL HERO (9:16 vertical)
+
+### R4 · `reel-04-influencers.mp4` — Marketing con influencers
 
 ```
-Slow continuous push toward a warm café counter in Asunción, Paraguay, steam rising from a freshly served plate, terracotta and wood surfaces, hanging plants blurred in the background. Warm documentary cinematography, natural available light from a window, golden-hour warmth, muted palette of cream, deep warm brown and soft ochre, 50mm lens, very shallow depth of field, gentle 35mm film grain, appetising and calm, hands may appear but no faces. Camera moves slowly and continuously, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
+Vertical 9:16 cinematic lifestyle film. A South American content creator in her twenties filming herself with a phone on a small tripod, in a sunlit Asunción living room with tropical plants and warm wooden furniture. She is mid-gesture, relaxed and natural, seen slightly from the side so the face is partly turned away. Warm afternoon light, muted terracotta and cream palette, 50mm lens, shallow depth of field, subtle grain. Camera slowly arcs around her, one continuous move, no cuts. 7 seconds.
 ```
 
-### BG · `fondo-trabajos-asuncion.webp` — imagen 21:9, 1920px
-
-Va detrás de las tarjetas de Trabajos con un velo `#321C04` al 80% encima.
-**Tiene que ser oscura de origen**, si no el velo la aplana.
+### R5 · `reel-05-ia.mp4` — Contenido con IA
 
 ```
-Wide cinematic aerial view of Asunción, Paraguay at dusk, low warm city lights beginning to glow, the Paraguay river catching the last light, silhouetted low-rise skyline, heavy atmospheric haze. Dark moody exposure, deep shadows, muted palette of deep warm brown, cream highlights and soft ochre, anamorphic 24mm look, subtle 35mm film grain, calm and premium, no people, no signage. Underexposed by one stop, rich blacks, no blown highlights.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, oversaturated colors, teal and orange grading, blue color cast, HDR halos, neon, fisheye distortion, cluttered frame, harsh direct flash
+Vertical 9:16 abstract cinematic clip. Macro shot of light refracting through a prism onto a warm off-white paper surface, throwing soft acid-lime and amber bands that slowly reorganise into a clean geometric pattern. Studio darkness around the edges, single controlled light source, deep shadows, high-end still-life aesthetic, 100mm macro lens, fine film grain. Camera pushes in very slowly, one continuous move, no cuts. 7 seconds.
+```
+
+### R6 · `reel-06-pauta.mp4` — Publicidad paga
+
+```
+Vertical 9:16 cinematic product film. A pair of unbranded leather sneakers rotating slowly on a matte terracotta pedestal in a dark studio. Single soft key light from the upper left, deep falloff into black, one subtle acid-lime rim light on the far edge. Product photography aesthetic, 85mm lens, shallow depth of field, fine grain. Camera orbits slowly around the pedestal, one continuous move, no cuts. 7 seconds.
+```
+
+---
+
+# FONDO Y OG
+
+### BG · `hero-fondo-asuncion.webp` — imagen 16:9, 1920px
+
+Va detrás del titular. **Tercio superior oscuro, sin excepción.**
+
+```
+Wide cinematic photograph of Asunción, Paraguay at blue hour, seen from a rooftop: low skyline, warm window lights scattered across dark buildings, the Paraguay river faintly visible, deep navy and charcoal sky occupying the whole upper third with no bright sky, no sun in frame. Muted palette, warm amber points of light against cold dark tones, subtle atmospheric haze, 35mm lens, fine film grain, low-contrast highlights, nothing blown out.
 ```
 
 ### OG · `og-contenido.jpg` — imagen 1.91:1, 1200×630
 
-La miniatura que sale cuando alguien comparte el link por WhatsApp — que en
-Paraguay es **el** canal donde se comparte. Es la única pieza donde el encuadre
-tiene que funcionar a 300px de ancho en un chat.
-
-**Sin texto en la imagen.** El título y la descripción los pone WhatsApp desde
-las meta tags; texto quemado dentro se duplica y se ve amateur.
+Es lo que se ve cuando alguien pega el link en WhatsApp. **Los bordes se
+recortan según el cliente: dejá el centro despejado.**
 
 ```
-Cinematic still of a professional video camera on a tripod, seen from behind and slightly to the side, framing a bright modern living room out of focus beyond it. Interior of a contemporary house in Asunción, Paraguay, warm late afternoon light through large windows. Warm documentary cinematography, natural available light, muted palette of cream, deep warm brown and soft ochre, 35mm lens, shallow depth of field with the camera body sharp and the room softly blurred, gentle 35mm film grain, calm and premium, no people. Composition weighted to the left third, generous clean negative space on the right.
---no text, watermark, logo, brand names, signage, subtitles, captions, letters, numbers, UI overlays, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, harsh direct flash
-```
-
-Guardar como `public/og-contenido.jpg`, calidad 82, objetivo ≤200 KB.
-`index.html` ya apunta a `https://contenido.com.py/og-contenido.jpg`.
-
----
-
-# TANDA 2 — TRABAJOS (16:9)
-
-Estos van dentro de tarjetas oscuras, chicos (≈600px de ancho). Encuadres
-**cerrados y legibles**: un plano general con mucho detalle no se lee a ese
-tamaño.
-
-### T1 · `trabajo-recorrido-propiedad.mp4`
-
-```
-Smooth gimbal walk-through passing from a hallway into a sunlit bedroom of a contemporary Paraguayan house, doorway framing the reveal. Warm documentary cinematography, natural available light, muted palette of cream, deep warm brown and soft ochre, 24mm lens, medium depth of field, gentle 35mm film grain, calm and premium, no people. Steady continuous forward motion, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
-```
-
-### T2 · `trabajo-ficha-vehiculo.mp4`
-
-```
-Slow tracking detail pass along the side body line of a clean modern sedan, reflections sliding across the paint, ending on the wheel arch. Warm-lit indoor showroom in Asunción, Paraguay, polished concrete, warm practical lighting. Warm documentary cinematography, muted palette of cream, deep warm brown and soft ochre, 85mm lens, very shallow depth of field, gentle 35mm film grain, premium and controlled, no people, no badges or brand marks. Slow continuous lateral tracking, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
-```
-
-### T3 · `trabajo-presentacion-clinica.mp4`
-
-```
-Slow lateral tracking shot across a modern dental or medical treatment room in Asunción, Paraguay, clean equipment, soft daylight from a side window, warm oak cabinetry against cream walls. Warm documentary cinematography, natural available light, muted palette of cream, deep warm brown and soft ochre, 35mm lens, shallow depth of field, gentle 35mm film grain, sober, clinical and reassuring, no people, no branding. Slow continuous lateral movement, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
-```
-
-### T4 · `trabajo-local-producto.mp4`
-
-```
-Slow overhead descent onto a beautifully plated dish being set down on a rustic wooden table, warm side light, terracotta crockery, a hand withdrawing from frame. Interior of a warm Paraguayan restaurant. Warm documentary cinematography, natural available light, muted palette of cream, deep warm brown and soft ochre, 50mm lens, very shallow depth of field, gentle 35mm film grain, appetising and premium, hands only, no faces. Slow continuous vertical descent, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
-```
-
----
-
-# TANDA 3 — SERVICIOS (1:1)
-
-Van en el panel del slider, más grandes que las tarjetas. Acá **sí conviene que
-haya personas trabajando** — ilustra el servicio y convierte mejor. Caras
-permitidas, nombres y cargos nunca.
-
-### S1 · `servicio-video-redes.mp4`
-
-```
-Over-the-shoulder shot of a young Paraguayan content creator holding a smartphone vertically, filming a product on a shop counter, small LED light just out of frame. Interior of a warm boutique in Asunción, Paraguay. Warm documentary cinematography, natural available light, muted palette of cream, deep warm brown and soft ochre, 35mm lens, shallow depth of field, gentle 35mm film grain, focused and unposed, natural expression, no eye contact with camera. Slow subtle handheld drift, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
-```
-
-### S2 · `servicio-recorrido-propiedad.mp4`
-
-```
-A camera operator with a gimbal walking backwards through the open-plan living area of a modern Paraguayan house, filming the space ahead. Seen from behind and to the side. Warm documentary cinematography, natural available light through large windows, muted palette of cream, deep warm brown and soft ochre, 35mm lens, medium depth of field, gentle 35mm film grain, professional and calm, no faces toward camera. Slow continuous following motion, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
-```
-
-### S3 · `servicio-clinica.mp4`
-
-```
-Calm wide shot of a modern clinic reception area in Asunción, Paraguay, a receptionist in neutral scrubs working quietly behind a warm oak counter, soft daylight from a tall window, cream walls, a single plant. Warm documentary cinematography, natural available light, muted palette of cream, deep warm brown and soft ochre, 35mm lens, shallow depth of field, gentle 35mm film grain, sober and reassuring, natural unposed expression, no eye contact with camera, no branding. Very slow push in, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
-```
-
-### S4 · `servicio-sitio-web.mp4`
-
-```
-Close overhead shot of a smartphone lying on a warm wooden desk showing a clean minimal website with large photography and a green chat button, a notebook and a cup of coffee beside it, a hand entering frame to scroll the screen. Warm documentary cinematography, natural window light from the left, muted palette of cream, deep warm brown and soft ochre, 50mm lens, shallow depth of field, gentle 35mm film grain, calm and premium, hands only, no faces. The on-screen content is abstract blocks and photographs, completely illegible, no readable words. Slow subtle push in, no cuts.
---no text, watermark, logo, brand names, signage, subtitles, captions, UI overlays, readable interface text, distorted hands, extra fingers, warped faces, plastic skin, oversaturated colors, teal and orange grading, blue color cast, HDR halos, fisheye distortion, cluttered frame, stock-photo grins, harsh direct flash, motion blur smear, duplicated limbs, jump cuts
+Wide editorial photograph, 1.91:1, of a small creative production crew filming a product on a table in a warm sunlit studio in Asunción: a camera on a tripod, a bounce card, terracotta and cream tones, tropical daylight through slatted blinds. Faces turned away or out of frame. Cinematic muted grade, 35mm lens, shallow depth of field, generous negative space in the centre of the frame, fine film grain.
 ```
 
 ---
 
 ## Manifiesto — dónde va cada archivo
 
-Guardá todo en `public/media/` con **exactamente** este nombre y después editá
-solo `src/media.ts`. Los nombres ya son los definitivos: no hay que renombrar
-nada a mano.
+Todos van a `public/media/` con el nombre exacto. Después se cambia el valor en
+`src/media.ts` a `/media/<archivo>` y se pone `USING_PLACEHOLDERS = false`.
 
-| # | Archivo | Slot | Ratio | Alt / etiqueta |
-|---|---|---|---|---|
-| H1 | `reel-01-inmobiliaria.mp4` | hero-bleed | 16:9 | — (decorativo, `aria-hidden`) |
-| H2 | `reel-02-concesionaria.mp4` | hero-bleed | 16:9 | — |
-| H3 | `reel-03-clinica.mp4` | hero-bleed | 16:9 | — |
-| H4 | `reel-04-local.mp4` | hero-bleed | 16:9 | — |
-| BG | `fondo-trabajos-asuncion.webp` | section-break | 21:9 | Vista de Asunción al atardecer |
-| OG | `og-contenido.jpg` | og:image | 1.91:1 | — (miniatura al compartir) |
-| T1 | `trabajo-recorrido-propiedad.mp4` | card-motif | 16:9 | Recorrido de propiedad — Inmobiliaria |
-| T2 | `trabajo-ficha-vehiculo.mp4` | card-motif | 16:9 | Ficha de vehículo en video — Concesionaria |
-| T3 | `trabajo-presentacion-clinica.mp4` | card-motif | 16:9 | Presentación de clínica — Salud |
-| T4 | `trabajo-local-producto.mp4` | card-motif | 16:9 | Reel de local y producto — Comercio |
-| S1 | `servicio-video-redes.mp4` | card-motif | 1:1 | Grabación de un reel vertical en un local de Asunción |
-| S2 | `servicio-recorrido-propiedad.mp4` | card-motif | 1:1 | Recorrido filmado de una propiedad en Asunción |
-| S3 | `servicio-clinica.mp4` | card-motif | 1:1 | Sala de espera de una clínica en Asunción |
-| S4 | `servicio-sitio-web.mp4` | card-motif | 1:1 | Sitio web de un negocio paraguayo en un celular |
+| Archivo | Constante en `media.ts` | Aspecto |
+|---|---|---|
+| `reel-01-produccion.mp4` | `HERO_REELS[0].src` | 9:16 |
+| `reel-02-redes.mp4` | `HERO_REELS[1].src` | 9:16 |
+| `reel-03-ugc.mp4` | `HERO_REELS[2].src` | 9:16 |
+| `reel-04-influencers.mp4` | `HERO_REELS[3].src` | 9:16 |
+| `reel-05-ia.mp4` | `HERO_REELS[4].src` | 9:16 |
+| `reel-06-pauta.mp4` | `HERO_REELS[5].src` | 9:16 |
+| `hero-fondo-asuncion.webp` | `HERO_BG.src` | 16:9 |
+| `og-contenido.jpg` | `public/og-contenido.jpg` (no pasa por `media.ts`) | 1.91:1 |
+
+### Pósters — obligatorios, uno por reel
+
+Cada reel necesita su `poster`, y **se extrae del MP4 ya comprimido**, no de la
+imagen de referencia que le diste a Seedance. El frame 1 que renderiza el
+modelo nunca es idéntico a la referencia, y esa diferencia se ve como un salto
+justo cuando arranca el video.
+
+```bash
+for f in reel-*.mp4; do
+  ffmpeg -i "$f" -vframes 1 -q:v 2 /tmp/f.png
+  cwebp -q 80 /tmp/f.png -o "${f%.mp4}.webp"
+done
+```
+
+Después, en `media.ts`, cada `poster` apunta a `/media/reel-0X-....webp`.
+
+Los pósters no son opcionales: con el ahorro de datos activado — muy común en
+prepago paraguayo — **son lo único que se descarga**, y el carrusel entero se
+ve solo con ellos.
 
 ## Antes de subirlos: comprimir
 
-Un MP4 crudo de Higgsfield pesa 8–25 MB. El presupuesto de la página es **≤500 KB
-sin contar los videos**, y el hero tiene que arrancar rápido en datos móviles de
-Tigo/Personal. Pasá cada clip por:
+Cada reel tiene que quedar en **≤1,5 MB** y cada póster en **≤60 KB** (los seis
+pósters se cargan en el primer render).
 
 ```bash
-ffmpeg -i entrada.mp4 -an -vcodec libx264 -crf 30 -preset slow \
-       -vf "scale=1280:-2,fps=24" -movflags +faststart salida.mp4
+# Video: 9:16, 1080 de alto, sin audio
+ffmpeg -i entrada.mp4 -vf "scale=-2:1080" -c:v libx264 -crf 26 -preset slow \
+       -movflags +faststart -an salida.mp4
+
+# Fondo del hero
+cwebp -q 82 -resize 1920 0 fondo.png -o hero-fondo-asuncion.webp
+
+# OG (JPG, no WebP: algunos clientes de mensajería todavía no lo previsualizan)
+ffmpeg -i og.png -vf "scale=1200:630" -q:v 3 og-contenido.jpg
 ```
-
-- `-an` saca el audio (los `<video>` van muted igual)
-- `-crf 30` a 1280px es suficiente: se ve detrás de un velo oscuro
-- `+faststart` deja el índice al principio → empieza a reproducir antes
-- Objetivo: **≤1,5 MB por clip**. Si alguno pasa de 2,5 MB, subí el `crf` a 32.
-
-Para el fondo: `cwebp -q 80 fondo.png -o fondo-trabajos-asuncion.webp`, objetivo
-≤150 KB.

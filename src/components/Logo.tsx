@@ -5,7 +5,7 @@ type LogoProps = {
 };
 
 /** Marca geométrica. Se usa en Nosotros, en las tarjetas de trabajos y en el footer. */
-export default function Logo({ size = 40, fill = '#321C04', className }: LogoProps) {
+export default function Logo({ size = 40, fill = '#14150F', className }: LogoProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

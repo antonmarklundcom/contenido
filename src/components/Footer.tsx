@@ -1,11 +1,11 @@
 import Logo from './Logo';
-import { HORARIO, PHONE_DISPLAY, PHONE_TEL, SITE_NAME, SOCIAL, TRUST } from '../site';
+import { HORARIO, NAV, PHONE_DISPLAY, PHONE_TEL, SITE_DOMAIN, SITE_NAME, SOCIAL, TRUST } from '../site';
 
 const ANIO = new Date().getFullYear();
 
 /**
- * FOOTER. NAP idéntico al del schema. Sin dirección de calle: el negocio
- * opera por zona de cobertura, no por local a la calle. No se inventa una.
+ * FOOTER. NAP idéntico al del schema. Sin dirección de calle: la agencia
+ * trabaja por zona de cobertura, no por local a la calle. No se inventa una.
  */
 export default function Footer() {
   const redes = [
@@ -14,51 +14,51 @@ export default function Footer() {
   ].filter(Boolean) as { label: string; href: string }[];
 
   return (
-    <footer className="relative bg-ink grain overflow-hidden px-6 pt-16 pb-12">
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <div className="grid gap-10 md:grid-cols-3">
+    <footer className="bg-ink text-bone/50 border-t border-bone/12 px-4 sm:px-6 lg:px-8 pt-12 pb-10">
+      <div className="w-full max-w-[1120px] mx-auto">
+        <div className="grid gap-9 md:grid-cols-3">
           <div>
-            <div className="flex items-center gap-3">
-              <Logo size={32} fill="rgba(255,249,242,0.9)" />
-              <span className="text-cream text-lg font-bold tracking-tight">{SITE_NAME}</span>
-            </div>
-            <p className="mt-4 text-cream/60 text-[15px] leading-relaxed">
-              Video y contenido para negocios de Asunción y el Gran Asunción.
+            <a href="#inicio" className="inline-flex items-center gap-3 min-h-[44px] text-bone">
+              <Logo size={30} fill="rgba(247,245,242,0.9)" />
+              <span className="label text-[0.7rem]">{SITE_DOMAIN}</span>
+            </a>
+            <p className="mt-4 text-[15px] leading-relaxed text-bone/50">
+              Agencia de contenido en Paraguay: estrategia, producción y distribución para marcas.
             </p>
           </div>
 
           <div>
-            <p className="eyebrow text-cream/60 mb-4">Contacto</p>
-            <ul className="flex flex-col gap-2 text-cream/80 text-[15px]">
+            <p className="label text-[0.6rem] text-bone/55 mb-3 !max-w-none">Contacto</p>
+            <ul className="grid gap-1 p-0 list-none text-[15px] text-bone/70">
               <li>
-                <a href={`tel:${PHONE_TEL}`} data-ev="call_click" data-ev-loc="footer" className="inline-flex items-center min-h-[48px] hover:text-cream">
+                <a
+                  href={`tel:${PHONE_TEL}`}
+                  data-ev="call_click"
+                  data-ev-loc="footer"
+                  className="inline-flex items-center min-h-[48px] hover:text-bone transition-colors duration-200 ease-hover"
+                >
                   {PHONE_DISPLAY}
                 </a>
               </li>
-              <li>Asunción, Paraguay</li>
+              <li>{TRUST.cobertura}</li>
               <li>{HORARIO}</li>
               {TRUST.ruc && <li>RUC {TRUST.ruc}</li>}
             </ul>
           </div>
 
           <div>
-            <p className="eyebrow text-cream/60 mb-4">Secciones</p>
-            <ul className="flex flex-col gap-2 text-cream/80 text-[15px]">
-              <li>
-                <a href="#servicios" className="inline-flex items-center min-h-[48px] hover:text-cream">
-                  Servicios
-                </a>
-              </li>
-              <li>
-                <a href="#trabajos" className="inline-flex items-center min-h-[48px] hover:text-cream">
-                  Trabajos
-                </a>
-              </li>
-              <li>
-                <a href="#proceso" className="inline-flex items-center min-h-[48px] hover:text-cream">
-                  Proceso
-                </a>
-              </li>
+            <p className="label text-[0.6rem] text-bone/55 mb-3 !max-w-none">Secciones</p>
+            <ul className="grid p-0 list-none text-[15px] text-bone/70">
+              {NAV.map((item) => (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    className="inline-flex items-center min-h-[48px] hover:text-bone transition-colors duration-200 ease-hover"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
               <li>
                 <a
                   href="https://sitiosweb.com.py"
@@ -66,7 +66,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   data-ev="cross_site_click"
                   data-ev-loc="footer"
-                  className="inline-flex items-center min-h-[48px] hover:text-cream"
+                  className="inline-flex items-center min-h-[48px] hover:text-bone transition-colors duration-200 ease-hover"
                 >
                   sitiosweb.com.py
                 </a>
@@ -74,10 +74,15 @@ export default function Footer() {
             </ul>
 
             {redes.length > 0 && (
-              <ul className="mt-5 flex gap-4 text-cream/80 text-[15px]">
+              <ul className="flex gap-4 mt-4 p-0 list-none text-[15px] text-bone/70">
                 {redes.map((red) => (
                   <li key={red.label}>
-                    <a href={red.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center min-h-[48px] hover:text-cream">
+                    <a
+                      href={red.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center min-h-[48px] hover:text-bone transition-colors duration-200 ease-hover"
+                    >
                       {red.label}
                     </a>
                   </li>
@@ -87,11 +92,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-cream/10 flex flex-wrap gap-x-6 gap-y-2 text-cream/60 text-[13px]">
+        <div className="flex flex-wrap gap-x-6 gap-y-1 mt-10 pt-6 border-t border-bone/12 label text-[0.58rem] text-bone/55">
           <span>
             © {ANIO} {SITE_NAME}
           </span>
-          <a href="#privacidad" className="inline-flex items-center min-h-[48px] hover:text-cream/70">
+          <a href="#privacidad" className="inline-flex items-center min-h-[48px] hover:text-bone/70">
             Política de privacidad
           </a>
         </div>

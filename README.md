@@ -1,10 +1,9 @@
 # contenido.com.py
 
-Landing de una página para **Contenido.com.py** — producción de video y contenido
-para negocios de Asunción y el Gran Asunción (inmobiliarias, concesionarias,
-clínicas, comercios).
+Landing de una página para **Contenido.com.py** — agencia paraguaya de
+contenido: estrategia, producción creativa y distribución para marcas.
 
-React + Vite + TypeScript + Tailwind + lucide-react. Sin otras librerías de UI.
+React + Vite + TypeScript + Tailwind. Sin librerías de UI ni de animación.
 
 ```bash
 npm install
@@ -15,18 +14,23 @@ npm run preview   # servir dist/
 
 ---
 
-## Los dos archivos que vas a editar
+## Los tres archivos que vas a editar
 
 Todo lo que cambia entre versiones está centralizado. No hay que buscar valores
 por los componentes.
 
 | Archivo | Qué controla |
 |---|---|
-| **`src/site.ts`** | Número de WhatsApp, teléfono, RUC, horarios, redes, clientes, ciudades |
+| **`src/site.ts`** | Número de WhatsApp, teléfono, RUC, horarios, redes, ciudades, navegación |
+| **`src/servicios.ts`** | Los seis servicios: nombre, titular, detalle y entregables |
 | **`src/media.ts`** | Todas las URLs de video e imagen |
 
 El número de WhatsApp existe en **un solo lugar** (`WA_NUMBER`). Cambiarlo es
 editar una línea.
+
+Agregar o sacar un servicio es editar el array de `servicios.ts`: la sección
+Servicios se rearma sola. Si el servicio nuevo también lleva reel, se agrega la
+entrada correspondiente en `HERO_REELS`.
 
 ---
 
@@ -36,7 +40,7 @@ editar una línea.
 que el sitio se vea terminado mientras generás. Ninguno es contenido paraguayo
 ni definitivo.
 
-Los 14 prompts para generarlos están en **`HIGGSFIELD-PROMPTS.md`**, con el
+Los 8 prompts para generarlos están en **`HIGGSFIELD-PROMPTS.md`**, con el
 manifiesto de nombres de archivo y los comandos de compresión.
 
 Flujo: generar → comprimir con ffmpeg → guardar en `public/media/` con el nombre
@@ -47,43 +51,58 @@ del manifiesto → cambiar el valor en `media.ts` a `/media/<archivo>` → poner
 
 ## Estructura de la página
 
-Cada sección tiene asignado un patrón de layout. La regla dura: **nunca dos
-patrones iguales seguidos.**
+| # | Sección | Fondo | Patrón |
+|---|---|---|---|
+| 01 | Hero + carrusel de reels | `night` | Pantalla completa, carrusel 3D vertical |
+| 02 | Problema | `bone` | Titular a la izquierda + tres líneas numeradas |
+| 03 | Servicios | `sand` | Seis filas numeradas |
+| 04 | Cómo trabajamos | `bone` | Tres pasos, riel numerado |
+| 05 | Ideal si / Todavía no | `sand` | Dos columnas espejadas |
+| 06 | Preguntas | `bone` | `<details>` nativo |
+| 07 | Contacto | `ink` | Cierre oscuro + formulario |
+| 08 | Footer | `ink` | — |
 
-| # | Sección | Patrón |
-|---|---|---|
-| 01 | Hero — showreel de 4 clips encadenados | full-bleed + solape de 25px |
-| 02 | Nosotros | P4 dos columnas editoriales + P2 bloque desplazado |
-| 03 | Servicios — slider auto-avanzable | P1 split asimétrico 5/7 |
-| 04 | Franja de confianza | P8 cinta full-bleed |
-| 05 | Trabajos — columna sticky + tarjetas | P7 sticky-side scroll |
-| 06 | Proceso | P5 riel numerado |
-| 07 | Declaración | P9 statement sobredimensionado |
-| 08 | Contacto | P1 espejado 5/7 |
-| 09 | Footer | — |
-
-Verificado: ≥1 full-bleed · ≥1 solape de borde · exactamente 1 statement
-sobredimensionado · 4 variantes de tarjeta, ninguna más de 4 veces.
+Los fondos alternan `bone → sand → bone`; el hero y el cierre son los dos
+bloques oscuros, así la página abre y cierra en oscuro con todo lo claro en el
+medio.
 
 ### Diseño
 
-Track **WARM CRAFT**, tokens resueltos en `tailwind.config.js`:
+Track **ACID EDITORIAL**, tokens resueltos en `tailwind.config.js`:
 
 ```
-base   #F6E4CF   crema (fondo de sección)
-ink    #321C04   marrón oscuro (texto, botones)
-cream  #FFF9F2   superficie clara
-muted  #D9C4AA   divisores, botón secundario
-accent      #B4762C   ocre — sobre fondo OSCURO y usos decorativos
-accent-deep #8A5A1E   ocre profundo — texto chico sobre crema (4.75:1)
+bone   #F7F5F2   fondo claro principal
+sand   #EBE7DF   fondo claro alterno
+ink    #14150F   texto sobre claro / fondo de secciones oscuras
+night  #0E1723   fondo del hero
+ink-muted   #63645B   cuerpo apagado — 5,59:1 sobre bone, 4,94:1 sobre sand
+acid        #C8F04A   lima — sobre fondo OSCURO y como relleno de botones
+acid-deep   #5A7014   lima profundo — texto chico sobre claro (5,07:1)
 ```
 
-Dos tonos del **mismo** acento: `#B4762C` sobre crema da 3,04:1 y no pasa AA,
-por eso el texto chico usa `accent-deep`. Verde `#25D366` solo dentro de
-elementos de WhatsApp, nunca como color de diseño.
+Dos profundidades del **mismo** acento: `#C8F04A` sobre `bone` da 1,2:1 y es
+ilegible, por eso el texto chico usa `acid-deep`. El lima nunca es color de
+texto sobre fondo claro.
 
-Tipografía: Inter (texto y display) + Instrument Serif itálica (solo la palabra
-destacada de cada titular).
+Tipografía: **Instrument Sans** para todo el texto, **JetBrains Mono**
+únicamente para las etiquetas en mayúscula (clase `.label`). Dos familias, cero
+excepciones.
+
+### El carrusel del hero
+
+`src/components/CarruselReels.tsx`. Las tarjetas se posicionan por `transform`
+imperativo dentro de un loop de `requestAnimationFrame`, no por clases: la
+posición es continua — una tarjeta está a 1,37 de distancia mientras se
+desliza — y eso no se puede expresar en utilidades de Tailwind.
+
+Tres decisiones que existen por el tráfico real (Android con datos prepagos de
+Tigo/Personal/Claro):
+
+- Solo el clip activo y sus dos vecinos reciben `src`. El resto es póster.
+- Solo el activo reproduce; los demás quedan pausados.
+- Con ahorro de datos (`saveData`, 2g) o `prefers-reduced-motion` **no se
+  descarga ni un MP4**: el carrusel queda como galería de pósters, navegable
+  con las flechas, los puntos y el teclado.
 
 ---
 
@@ -113,12 +132,11 @@ Plausible, todos los nombres de evento históricos ya coinciden: es un pegado,
 no un re-etiquetado.
 
 Eventos activos: `whatsapp_click`, `call_click`, `form_submit`,
-`cross_site_click`, `portfolio_open` — 15 puntos de captura en total.
+`cross_site_click`.
 
-Mientras tanto la atribución existe igual: **cada link de WhatsApp lleva mensaje
-pre-cargado con el sitio y la sección** (`vengo de contenido.com.py (servicios)`),
-así se sabe qué sección convirtió aunque el número esté compartido con otros
-sitios.
+Cada fila de Servicios tiene su propio link de WhatsApp con contexto
+(`servicio-ugc`, `servicio-pauta`, …), así en el CRM se ve **por qué servicio**
+escribieron sin tener que preguntarlo.
 
 ---
 
@@ -141,14 +159,22 @@ datos.
 Corrido con Chromium real sobre el build de producción:
 
 - Sin scroll horizontal en 360 / 390 / 640 / 768 / 1024 / 1280 / 1440 / 1920
-- Un solo `<h1>`, `lang="es-PY"`, JSON-LD `ProfessionalService`, canonical, OG
+- El hero completo —titular, CTAs, carrusel y controles— entra arriba del
+  pliegue desde 390×844 para arriba
+- Un solo `<h1>`, `lang="es-PY"`, JSON-LD `ProfessionalService` con los seis
+  servicios, canonical, OG
 - Voseo en todos los CTA — cero formas de "tú", cero inglés en la UI
-- Todo el texto pasa contraste AA contra su fondo real
-- `prefers-reduced-motion`: cero transiciones activas, todo el contenido visible
-- Áreas táctiles ≥48px (salvo un link en línea dentro de prosa, exento por WCAG 2.5.8)
+- **Todo el texto pasa contraste AA contra su fondo real** (auditado elemento
+  por elemento sobre el DOM renderizado)
+- `prefers-reduced-motion`: carrusel pausado, ningún video reproduciendo, todo
+  el contenido visible
+- Ahorro de datos: **cero MP4 descargados**, aviso visible en el carrusel
+- Carrusel navegable por teclado (← →); las tarjetas del fondo quedan fuera del
+  tabulado y del árbol de accesibilidad
+- Menú móvil cierra con Escape
+- Áreas táctiles ≥44px (los puntos del carrusel son de 26px, sobre el mínimo de
+  24px de WCAG 2.2; un link en línea dentro de prosa está exento por 2.5.8)
 - Cero errores de JS · `npm audit`: 0 vulnerabilidades
-- Los 12 `<video>` cargan solo al entrar en pantalla — en el primer render solo
-  se descargan el clip visible del hero y el siguiente
 
 ### Presupuesto de página
 
@@ -162,35 +188,40 @@ videos: comprimidos a ≤1,5 MB cada uno como indica `HIGGSFIELD-PROMPTS.md`.
 Nada de esto está inventado en el sitio — las filas se ocultan solas mientras
 falten los datos.
 
-- [ ] **Confirmar el número de WhatsApp.** Hoy usa el stage-1 `+595 995 628862`
+- [ ] **Confirmar el número de WhatsApp.** Hoy usa el stage-1 `+595 995 628 862`
 - [ ] **RUC** — `TRUST.ruc` está vacío; la fila no se muestra hasta cargarlo
 - [ ] **Horarios reales** — `HORARIO` tiene un valor asumido
-- [ ] **Instagram y Facebook** — `SOCIAL`; en Paraguay pesan más que en otros mercados
+- [ ] **Instagram y Facebook** — `SOCIAL`. Para una agencia de contenido son la
+      prueba de trabajo más directa que hay: sin ellos falta el respaldo obvio
 - [ ] **Clientes reales** — `CLIENTES` está vacío a propósito. El muro de logos
       aparece solo cuando haya permiso por escrito
-- [ ] **Reseñas** — no hay sección de testimonios. No se inventa una; cuando
-      haya reseñas reales de Google, se agregan con nombre y barrio
-- [ ] Generar los 14 medios (`HIGGSFIELD-PROMPTS.md`)
-- [ ] Imagen OG (prompt OG en HIGGSFIELD-PROMPTS.md) → `public/og-contenido.jpg`
+- [ ] **Reseñas y casos** — no hay sección de testimonios ni métricas de
+      campaña. No se inventan: cuando haya resultados que se puedan mostrar
+      con permiso del cliente, se agregan
+- [ ] Generar los 8 medios (`HIGGSFIELD-PROMPTS.md`)
+- [ ] Imagen OG (prompt OG) → `public/og-contenido.jpg`
 - [ ] Variables `VENDERCRM_*` en Hostinger
 - [ ] Verificación de Search Console por **registro TXT de DNS** (sobrevive redeploys)
-- [ ] Perfil de Negocio de Google + WhatsApp Business con catálogo y horarios
+- [ ] Perfil de Negocio de Google + WhatsApp Business con horarios
 
 ### Supuestos tomados
 
-- **Sección 2 vende servicios propios y cruza a sitiosweb.com.py.** El pedido
-  ("los servicios que ofrecemos en sitiosweb.com.py") admitía dos lecturas: que
-  contenido.com.py revenda los servicios web, o que la sección venda servicios y
-  derive los sitios a la otra marca. Se implementó la segunda: los tres primeros
-  servicios son de video y el cuarto —"Y el sitio donde todo eso vive"— enlaza a
-  sitiosweb.com.py. Si querías la primera lectura, se cambia en el array
-  `SERVICIOS` de `src/components/Servicios.tsx`.
-- **Trabajos se describe por tipo de pieza, no por cliente.** Sin nombres, sin
-  métricas, sin "caso de éxito". Cuando haya permisos, se agregan.
-- **La burbuja de WhatsApp es solo desktop.** En móvil la barra fija inferior ya
-  tiene WhatsApp como acción primaria; burbuja + barra + banner de cookies en
-  390px tapaban el H1 y el CTA del hero.
+- **Los seis servicios se toman del sitio en producción** y se reescribieron en
+  voseo paraguayo. Ningún precio, plazo ni resultado se publica: la respuesta de
+  "¿cuánto cuesta?" explica por qué no hay lista pública en vez de inventar una.
+- **El carrusel del hero se titula "Piezas producidas por nosotros"**, no
+  "Clientes" ni "Casos". Mientras los reels sean generados, decir otra cosa
+  sería atribuir trabajo que no existe.
+- **Nada del sitio viejo se migró como prueba social.** Los nombres de
+  portfolio, perfiles de influencers, testimonios, porcentajes de campaña y
+  precios en USD que hay hoy en producción tienen forma de plantilla; no se
+  trajeron.
+- **La sección "Todavía no, si…" cruza a sitiosweb.com.py** para quien necesita
+  el sitio antes que el contenido.
+- **La barra fija de móvil aparece recién al salir del hero.** Dentro del hero
+  el CTA "Empezar" ya está a la vista y la barra taparía el carrusel, que es
+  justamente lo que hay que mirar. No lleva precio: no hay lista pública.
 - **El banner de cookies aparece al bajar del hero**, no en el primer pixel. El
-  sitio no carga scripts de terceros ni escribe cookies no esenciales, así que
-  es correcto y no pelea con la conversión. Si entra GA4, el disparo debe quedar
-  condicionado a la respuesta guardada, no al render del banner.
+  sitio no carga scripts de terceros ni escribe cookies no esenciales. Si entra
+  GA4, el disparo debe quedar condicionado a la respuesta guardada, no al
+  render del banner.
