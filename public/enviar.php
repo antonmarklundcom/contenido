@@ -8,8 +8,8 @@
  * ninguna consulta se pierda.
  *
  * Configuración en Hostinger (hPanel → Avanzado → Variables de entorno), o
- * en un .env fuera de public_html:
- *   VENDERCRM_URL      https://<dominio-crm>/api/v1/leads
+ * en private/vendercrm.php fuera de public_html (dos nombres canonicos):
+ *   VENDERCRM_URL      https://crm.clientes.com.py (base origin; old exact endpoint remains compatible)
  *   VENDERCRM_API_KEY  <clave del tenant>
  */
 
@@ -57,8 +57,21 @@ $payload = [
     'created_at' => gmdate('c'),
 ];
 
-$crmUrl = getenv('VENDERCRM_URL') ?: '';
-$crmKey = getenv('VENDERCRM_API_KEY') ?: '';
+require_once __DIR__ . '/lib/vendercrm-config.php';
+$canonicalEnv = ['VENDERCRM_URL'=>getenv('VENDERCRM_URL'), 'VENDERCRM_API_KEY'=>getenv('VENDERCRM_API_KEY'), 'VENDERCRM_CONFIG_FILE'=>getenv('VENDERCRM_CONFIG_FILE')];
+// Historical full endpoint: normalize only the exact legacy route.
+if (is_string($canonicalEnv['VENDERCRM_URL']) && parse_url($canonicalEnv['VENDERCRM_URL'], PHP_URL_PATH) === '/api/v1/leads' && !parse_url($canonicalEnv['VENDERCRM_URL'], PHP_URL_QUERY) && !parse_url($canonicalEnv['VENDERCRM_URL'], PHP_URL_FRAGMENT)) {
+    $canonicalEnv['VENDERCRM_URL'] = substr($canonicalEnv['VENDERCRM_URL'], 0, -strlen('/api/v1/leads'));
+}
+try {
+    $canonicalCrm = \VenderCRM\Config::optional(__DIR__, $canonicalEnv);
+} catch (RuntimeException $error) {
+    // Configuration errors retain the existing local lead fallback.
+    error_log('contenido: invalid server CRM configuration');
+    $canonicalCrm = null;
+}
+$crmUrl = $canonicalCrm ? $canonicalCrm->endpoint() : '';
+$crmKey = $canonicalCrm ? $canonicalCrm->apiKey() : '';
 $forwarded = false;
 
 if ($crmUrl !== '' && $crmKey !== '') {
